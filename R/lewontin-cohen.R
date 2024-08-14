@@ -69,7 +69,7 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
   )
 
   # sampling --------
-  fit <- sampling(stanmodels$lewontin_cohen, data = dat, ...)
+  fit <- sampling(stanmodels$lewontin_cohen, data = dat, chains = chains, ...)
   
   return (fit)
 }
