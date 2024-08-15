@@ -1,6 +1,7 @@
 
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -28,59 +29,109 @@ You can install the development version of xsdm from GitHub using the `devtools`
 devtools::install_github("emilio-berti/xsdm")
 ```
 
-## Example
+## XSDM using the Lewontin-Cohen model
 
-This, as the other examples in this vignette ...
+For the sake of simplicity, we will focus on a species that has few recorded observations ($n = 20$) and which distribution depends only on one climatic predictor.
+In general, we recommend to run XSDM for species that have at least $n = #$.
+In addition, the distribution of most species is likely influenced by more than one climatic factor.
+See section ... for an example of selecting important variables using model selection.
 
-
-```{r example}
+First we generate a fake time series of one climatic variable:
+```{r timeseries}
 library(xsdm)
 library(terra)
 
-# fake time serie of first climatic variable
+# fake time serie of first climatic variable -----------
 for (i in seq_len(10)) {
   if (i == 1) {
-    r <- rast(matrix(rnorm(1e4), 1e2, 1e2))
+    r <- rast(matrix(rnorm(1e4, 30, 10), 1e2, 1e2))
   } else {
-    r <- c(r, rast(matrix(rnorm(1e4), 1e2, 1e2)))
+    r <- c(r, rast(matrix(rnorm(1e4, 30, 10), 1e2, 1e2)))
   }
 }
+```
 
-# fake time serie of second climatic variable
-for (i in seq_len(10)) {
-  if (i == 1) {
-    s <- rast(matrix(rnorm(1e4), 1e2, 1e2))
-  } else {
-    s <- c(s, rast(matrix(rnorm(1e4), 1e2, 1e2)))
-  }
+Then, we create a virtual species with niche parameters `mu`, `sigl` and `sigr` and observation parameters `c` and `pd`.
+We also sample location at which we sampled the occurrence of this species:
+
+```{r virtual}
+# uni-dimensional niche
+lambda <- function(x, mu, sigl, sigr) {
+  u <- x - mu
+  u[u <= 0] <- (u[u <= 0] / sigl) ^ 2
+  u[u > 0] <- (u[u > 0] / sigr) ^ 2
+  lambda <- exp(-0.5 * u)
+  return(lambda)
 }
 
-p <- runif(50, 0, 100)
+# probability of detection
+pr <- function(x, c, pd) {
+  return (pd / (1 + exp(c - x)))
+}
+
+# species parameters
+pars <- list(mu = 25, sigl = 2, sigr = 5, c = -5, pd = 0.9)
+
+# location vector
+p <- runif(200, 0, 100)
 p <- vect(matrix(p, ncol = 2))
-p$occ <- sample(c(0, 1), 1e3, replace = TRUE, prob = c(10, 1))
+
+# occurrence at locations
+r_vals <- as.matrix(terra::extract(r, p))
+lambdas <- lambda(
+  as.matrix(r_vals),
+  mu = pars$mu, sigl = pars$sigl, sigr = pars$sigr
+)
+ltsgr <- rowMeans(log(lambdas))
+P <- pr(ltsgr, c = pars$c, pd = pars$pd)
+p$occ <- rbinom(length(p), 1, prob = P)
+table(p$occ)
+```
+
+Let's look at the actual niche of this species:
+
+```{r show}
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 2))
+plot(
+  sort(r_vals), lambdas[order(r_vals)], 
+  type = "l", frame = FALSE,
+  xlab = expression("Climate (e"[t]*")"),
+  ylab = expression(lambda[t]),
+)
+plot(
+  rowMeans(r_vals), ltsgr, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "ltsgr",
+)
+plot(
+  rowMeans(r_vals), P, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "Probability of detection",
+)
+plot(
+  rowMeans(r_vals), p$occ, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "Occurrence",
+)
+par(oldpar)
+```
+
+We are then ready to fit XSDM using the Lewontin-Cohen model and one climatic predictor: 
+
+```{r xsdm, cache=TRUE}
 niche <- lewontin_cohen(
-  list(r, s), p, 
-  warmup = 10, iter = 20, 
-  refresh = 5, cores = 4
+  list(r), p,                 # first argument should always be a list
+  warmup = 500, iter = 1000,  # only as example; you need more than this
+  cores = 4, chains = 4,
+  refresh = 10
 )
 
+rstan::traceplot(niche, pars = c("mu", "sigl", "sigr", "c", "pd"))
+summary(niche, c("mu", "sigl", "sigr", "c", "pd"))$summary
 rstan::extract(niche, c("mu"))
-summary(niche, c("mu", "sigl", "sigr", "R[1,2]", "c", "pd"))$summary
 
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

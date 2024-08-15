@@ -1,18 +1,18 @@
 #' @title Lewontin-Cohen XSDM
-#' 
+#'
 #' @importFrom rstan sampling
 #' @importFrom methods is
-#' @importFrom terra nlyr ncell xyFromCell
+#' @importFrom terra nlyr
 #' @export
-#' 
-#' @param x List of raster stacks. Each stack represent the timeseries 
+#'
+#' @param x List of raster stacks. Each stack represent the timeseries
 #'  one climatic variable.
 #' @param p SpatVector with species' occurrences.
 #' @param chains Ingeter, number of chains to run.
 #' @param ... Additional arguments for `rstan::sampling()`.
-#' 
+#'
 #' @return An object of class `stanfit` returned by `rstan::sampling`
-#' 
+#'
 lewontin_cohen <- function(x, p, chains = 4, ...) {
   stopifnot(is(x, "list"))
   stopifnot(all(sapply(x, \(x) is(x, "SpatRaster"))))
@@ -24,30 +24,34 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
   if (chains %% 1 != 0) {
     stop("'chains' must be an integer.")
   }
-  
-  # get climate at occurrences -------------
-  d <- lapply(x, \(x) extract(x, p, ID = FALSE, cells = TRUE, xy = TRUE))
-  # remove NAs values ---------
+
+  message(
+    "You are running XSDM using:\n",
+    "  - the Lewontin-Cohen\n",
+    "  - ", length(x), " climatic variable(s) as predictors"
+  )
+
+  d <- lapply(x, \(x) terra::extract(x, p, ID = FALSE))
+  # NAs need to be removed
   empty <- lapply(d, \(x) which(is.na(x), arr.ind = TRUE)[, 1])
   empty <- unique(unlist(empty))
   if (length(empty) > 0) d <- lapply(d, \(d) d[-empty, ])
-  xy <- lapply(d, \(d) d[, c("x", "y", "cell")])
-  d <- lapply(d, \(d) d[, -which(colnames(d) %in% c("x", "y", "cell"))])
-  
-  # create climate array ------------
+  # need an array for stan
   climate <- array(NA, dim = c(nrow(d[[1]]), ncol(d[[1]]), length(d)))
   for (i in seq_along(x)) {
     climate[, , i] <- as.matrix(d[[i]])
   }
 
-  # initial values for parameters -------------------
+  # initial values are obtained from the climate to facilitate fitting
+  R_init <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
+  diag(R_init) <- 1
   init <- rep(
     list(
       list(
         mu = apply(climate, MARGIN = 3, mean),
         sigl = apply(climate, MARGIN = 3, sd),
         sigr = apply(climate, MARGIN = 3, sd),
-        L = matrix(c(1, 0, 0, 1), byrow = TRUE, ncol = 2),
+        L = t(chol(R_init)),
         b = 3,
         c = -1,
         pd = .95
@@ -55,8 +59,9 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
     ),
     chains
   )
+  if (length(x) == 1) init <- "random"  #DEV cannot make this work for uni-dimensional cases. I think the problem is that this is a vector in Stan, but is passed as a real.
 
-  # standata -------------
+  # need a list for each chains
   dat <- rep(
     list(
       N = length(p),
@@ -64,12 +69,17 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
       P = dim(climate)[3],
       ts = climate,
       occ = p$occ
-    ), 
+    ),
     chains
   )
 
-  # sampling --------
-  fit <- sampling(stanmodels$lewontin_cohen, data = dat, chains = chains, ...)
-  
-  return (fit)
+  fit <- sampling(
+    stanmodels$lewontin_cohen,
+    data = dat,
+    init = init,
+    chains = chains,
+    ...
+  )
+
+  return(fit)
 }

@@ -30,39 +30,32 @@ model{
   mu ~ normal(0, 10);
   sigl ~ exponential(0.01);
   sigr ~ exponential(0.01);
-  L ~ lkj_corr_cholesky(2.0);         // 2.0 = shape parameter
   c ~ normal(0, 100);
   pd ~ uniform(0, 1);
-
-  // likelihood
-  for(i in 1:N){                      // loop over locations
-    for(j in 1:M){                    // loop over time
-      w = to_vector(ts[i,j, ]);
-      u = mdivide_left_tri_low(L, w - mu);
-      for (k in 1:P){                 // loop over covariates
-        if (u[k] < 0) { 
-          v[k] = ( u[k] / sigl[k] )^2; 
-      } else { 
-          v[k] = ( u[k] / sigr[k] )^2; 
-        }
-      }
-      response[j] = -0.5 * sum(v);
-    }
-    loglam[i] = mean(response);
+  if (P > 1) {
+    L ~ lkj_corr_cholesky(2.0);       // 2.0 = shape parameter
   }
-  occ ~ bernoulli(pd * inv_logit(loglam - c)); 
-}
 
-generated quantities{ // calculate correlation matrix R from Cholesky matrix L
-  matrix[P,P] R;
-  vector[N] log_lik;{
-    // auxiliary variables
-    vector[M] response;
-    vector[N] loglam;
-    vector[P] u; 
-    vector[P] v; 
-    vector[P] w; 
-    
+  // If statement here and duplicate loop should be more efficient
+  // as if is evaluated only once and not at each iteration.
+  if (P == 1) {                         // one climatic variable
+    // likelihood
+    for(i in 1:N){                      // loop over locations
+      for(j in 1:M){                    // loop over time
+        w = to_vector(ts[i,j, ]);
+        u = w - mu;
+        for (k in 1:P){                 // loop over covariates
+          if (u[k] < 0) { 
+            v[k] = ( u[k] / sigl[k] )^2; 
+        } else { 
+            v[k] = ( u[k] / sigr[k] )^2; 
+          }
+        }
+        response[j] = -0.5 * sum(v);
+      }
+      loglam[i] = mean(response);
+    }
+  } else {                              // more than one climatic variable
     // likelihood
     for(i in 1:N){                      // loop over locations
       for(j in 1:M){                    // loop over time
@@ -78,8 +71,64 @@ generated quantities{ // calculate correlation matrix R from Cholesky matrix L
         response[j] = -0.5 * sum(v);
       }
       loglam[i] = mean(response);
-      log_lik[i] = bernoulli_lpmf(occ[i] | pd * inv_logit(loglam[i] - c)); 
     }
   }
-  R = L*(L');
+  occ ~ bernoulli(pd * inv_logit(loglam - c)); 
+}
+
+generated quantities{ // calculate correlation matrix R from Cholesky matrix L
+  matrix[P,P] R;
+  vector[N] log_lik;{
+    // auxiliary variables
+    vector[M] response;
+    vector[N] loglam;
+    vector[P] u; 
+    vector[P] v; 
+    vector[P] w; 
+    
+    // If statement here and duplicate loop should be more efficient
+    // as if is evaluated only once and not at each iteration.
+    if (P == 1) {                         // one climatic variable
+      // likelihood
+      for(i in 1:N){                      // loop over locations
+        for(j in 1:M){                    // loop over time
+          w = to_vector(ts[i,j, ]);
+          u = w - mu;
+          for (k in 1:P){                 // loop over covariates
+            if (u[k] < 0) { 
+              v[k] = ( u[k] / sigl[k] )^2; 
+          } else { 
+              v[k] = ( u[k] / sigr[k] )^2; 
+            }
+          }
+          response[j] = -0.5 * sum(v);
+        }
+        loglam[i] = mean(response);
+        log_lik[i] = bernoulli_lpmf(occ[i] | pd * inv_logit(loglam[i] - c)); 
+      }
+    } else {                              // more than one climatic variable
+      // likelihood
+      for(i in 1:N){                      // loop over locations
+        for(j in 1:M){                    // loop over time
+          w = to_vector(ts[i,j, ]);
+          u = mdivide_left_tri_low(L, w - mu);
+          for (k in 1:P){                 // loop over covariates
+            if (u[k] < 0) { 
+              v[k] = ( u[k] / sigl[k] )^2; 
+          } else { 
+              v[k] = ( u[k] / sigr[k] )^2; 
+            }
+          }
+          response[j] = -0.5 * sum(v);
+        }
+        loglam[i] = mean(response);
+        log_lik[i] = bernoulli_lpmf(occ[i] | pd * inv_logit(loglam[i] - c)); 
+      }
+    }
+  }
+  if (P == 1) {
+    R[1, 1] = 1;
+  } else {
+    R = L*(L');
+  }
 }
