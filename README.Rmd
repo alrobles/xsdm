@@ -1,4 +1,6 @@
-
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. -->
@@ -70,10 +72,10 @@ pr <- function(x, c, pd) {
 }
 
 # species parameters
-pars <- list(mu = 25, sigl = 2, sigr = 5, c = -5, pd = 0.9)
+pars <- list(mu = 25, sigl = 2, sigr = 10, c = -5, pd = 0.9)
 
 # location vector
-p <- runif(200, 0, 100)
+p <- runif(500, 0, 100)
 p <- vect(matrix(p, ncol = 2))
 
 # occurrence at locations
@@ -123,6 +125,7 @@ par(oldpar)
 We are then ready to fit XSDM using the Lewontin-Cohen model and one climatic predictor: 
 
 ```{r xsdm, cache=TRUE}
+scaled_r <- scale(r)          # scaling helps with fitting
 niche <- lewontin_cohen(
   list(r), p,                 # first argument should always be a list
   warmup = 500, iter = 1000,  # only as example; you need more than this
