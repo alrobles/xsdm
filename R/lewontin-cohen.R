@@ -47,7 +47,7 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
         mu = apply(climate, MARGIN = 3, mean),
         sigl = apply(climate, MARGIN = 3, sd),
         sigr = apply(climate, MARGIN = 3, sd),
-        L = matrix(c(1, 0, 0, 1), byrow = TRUE, ncol = 2),
+        L = t(chol(matrix(c(1, 0, 0, 1), byrow = TRUE, ncol = 2))),  # Cholesky factor with no correlation
         b = 3,
         c = -1,
         pd = .95

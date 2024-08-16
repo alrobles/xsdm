@@ -1,6 +1,9 @@
-
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -33,11 +36,13 @@ devtools::install_github("emilio-berti/xsdm")
 This, as the other examples in this vignette ...
 
 
+Let's create some fake climate time series and a virtual species that lives in it:
+
 ```{r example}
 library(xsdm)
 library(terra)
 
-# fake time serie of first climatic variable
+# fake time serie of one climatic variable
 for (i in seq_len(10)) {
   if (i == 1) {
     r <- rast(matrix(rnorm(1e4), 1e2, 1e2))
@@ -45,42 +50,59 @@ for (i in seq_len(10)) {
     r <- c(r, rast(matrix(rnorm(1e4), 1e2, 1e2)))
   }
 }
+names(r) <- seq_len(nlyr(r)) #years, starting from 1
+# timeseries for the first 10 locations
+ts.plot(
+  t(as.matrix(r[1:10])),
+  gpars = list(lw = 3, col = hcl.colors(10, "Set 2"))
+)
+```
 
-# fake time serie of second climatic variable
-for (i in seq_len(10)) {
-  if (i == 1) {
-    s <- rast(matrix(rnorm(1e4), 1e2, 1e2))
-  } else {
-    s <- c(s, rast(matrix(rnorm(1e4), 1e2, 1e2)))
-  }
-}
+We sample random locations for the species and calculate its probability of detection based on species-specific parameters.
 
+```
 p <- runif(50, 0, 100)
 p <- vect(matrix(p, ncol = 2))
-p$occ <- sample(c(0, 1), 1e3, replace = TRUE, prob = c(10, 1))
+
+# scaling predictors usually helps
+r <- scale(r)
+r_vals <- extract(r, p)
+
+# demographic model
+lambdat <- function(x, mu, sigl, sigr) {
+  match.call
+  u <- x - mu
+  res <- NA * numeric(length(x))
+  res[u <= 0] <- (u[u <= 0] / sigl[u <= 0]) ^ 2
+  res[u > 0] <-(u[u > 0] / sigr[u > 0]) ^ 2
+  return( exp(-0.5 * res) )
+}
+
+# detection model
+detection_link <- function(x, c, pd) {
+  return( 1 / (1 + exp( - (x - c) )) * pd )
+}
+
+pars <- list(mu = 0, sigl = 1, sigr = 2, c = -3, pd = 1)
+
+lambda <- matrix(
+  sapply(as.matrix(r_vals), lambdat, pars$mu, pars$sigl, pars$sigr),
+  nrow = nrow(r_vals), ncol = ncol(r_vals)
+)
+plot(unlist(r_vals), lambda)
+ltsgr <- rowMeans(log(lambda))
+pr <- detection_link(ltsgr, c = pars$c, pd = pars$pd)
+
+# sample occurrence from a bernoulli trial
+p$occ <- rbinom(nrow(r_vals), 1, prob = pr)
+
 niche <- lewontin_cohen(
-  list(r, s), p, 
-  warmup = 10, iter = 20, 
-  refresh = 5, cores = 4
+  list(r), p,
+  warmup = 300, iter = 600,
+  refresh = 50, cores = 4
 )
 
-rstan::extract(niche, c("mu"))
-summary(niche, c("mu", "sigl", "sigr", "R[1,2]", "c", "pd"))$summary
-
+pars
+summary(niche, c("mu", "sigl", "sigr", "c", "pd"))$summary
+hist(rstan::extract(niche, c("mu"))$mu)
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
