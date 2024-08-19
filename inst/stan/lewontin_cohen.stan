@@ -44,14 +44,12 @@ model{
       for(j in 1:M){                    // loop over time
         w = to_vector(ts[i,j, ]);
         u = w - mu;
-        for (k in 1:P){                 // loop over covariates
-          if (u[k] < 0) { 
-            v[k] = ( u[k] / sigl[k] )^2; 
+        if (u[k] < 0) { 
+          v[k] = ( u[k] / sigl[k] )^2; 
         } else { 
-            v[k] = ( u[k] / sigr[k] )^2; 
-          }
+          v[k] = ( u[k] / sigr[k] )^2; 
         }
-        response[j] = -0.5 * sum(v);
+        response[j] = -0.5 * v;
       }
       loglam[i] = mean(response);
     }
@@ -94,15 +92,13 @@ generated quantities{ // calculate correlation matrix R from Cholesky matrix L
         for(j in 1:M){                    // loop over time
           w = to_vector(ts[i,j, ]);
           u = w - mu;
-          for (k in 1:P){                 // loop over covariates
-            if (u[k] < 0) { 
-              v[k] = ( u[k] / sigl[k] )^2; 
-          } else { 
-              v[k] = ( u[k] / sigr[k] )^2; 
-            }
-          }
-          response[j] = -0.5 * sum(v);
+          u = w - mu;
+        if (u[k] < 0) { 
+          v[k] = ( u[k] / sigl[k] )^2; 
+        } else { 
+          v[k] = ( u[k] / sigr[k] )^2; 
         }
+        response[j] = -0.5 * v;
         loglam[i] = mean(response);
         log_lik[i] = bernoulli_lpmf(occ[i] | pd * inv_logit(loglam[i] - c)); 
       }

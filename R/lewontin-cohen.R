@@ -52,9 +52,8 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
         sigl = apply(climate, MARGIN = 3, sd),
         sigr = apply(climate, MARGIN = 3, sd),
         L = t(chol(R_init)),  # Cholesky factor with no correlation
-        b = 3,
-        c = -1,
-        pd = .95
+        c = -5,
+        pd = .90
       )
     ),
     chains

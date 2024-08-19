@@ -43,18 +43,26 @@ First we generate a fake time series of one climatic variable:
 library(xsdm)
 library(terra)
 
-for (i in seq_len(10)) {
-  if (i == 1) {
-    r <- rast(matrix(rnorm(1e4, 30, 10), 1e2, 1e2))
-  } else {
-    r <- c(r, rast(matrix(rnorm(1e4, 30, 10), 1e2, 1e2)))
+# a nice symmetric cliamte
+mus <- rast(matrix(NA, 1e2, 1e2))
+xy <- xyFromCell(mus, seq_len(ncell(mus)))
+dist <- sqrt(rowSums( (xy - c(50, 50))^2 ))
+values(mus)[, 1] <- dist
+mus <- matrix(mus, nrow = 1e2, byrow = TRUE)
+
+r <- array(NA, dim = c(1e2, 1e2, 30))
+for (i in seq_len(nrow(r))) {
+  for (j in seq_len(ncol(r))) {
+    r[i, j, ] <- rnorm(30, mus[i, j], 15)
   }
 }
-
+r <- rast(r)
 names(r) <- seq_len(nlyr(r)) #years, starting from 1
-# timeseries for the first 10 locations
+plot(c(mean(r), app(r, "sd")))
+
+# timeseries for 10 random locations
 ts.plot(
-  t(as.matrix(r[1:10])),
+  t(as.matrix(r[sample(seq_len(ncell(r)), 10)])),
   gpars = list(lw = 3, col = hcl.colors(10, "Set 2"))
 )
 ```
@@ -78,7 +86,7 @@ pr <- function(x, c, pd) {
 }
 
 # species parameters
-pars <- list(mu = 30, sigl = 2, sigr = 10, c = -5, pd = 0.9)
+pars <- list(mu = 50, sigl = 10, sigr = 3, c = -5, pd = 0.9)
 
 # location vector
 p <- runif(500, 0, 100)
@@ -131,12 +139,12 @@ par(oldpar)
 We are then ready to fit XSDM using the Lewontin-Cohen model and one climatic predictor: 
 
 ```{r xsdm, cache=TRUE}
-scaled_r <- scale(r)          # scaling helps with fitting
+<!-- scaled_r <- scale(r)          # scaling helps with fitting -->
 niche <- lewontin_cohen(
-  list(r), p,                 # first argument should always be a list
-  warmup = 50, iter = 100,  # only as example; you need more than this
+  list(r), p,                  # first argument should always be a list
+  warmup = 1000, iter = 2000,  # already ok with this
   cores = 4, chains = 4,
-  refresh = 10
+  refresh = 500
 )
 
 rstan::traceplot(niche, pars = c("mu", "sigl", "sigr", "c", "pd"))
