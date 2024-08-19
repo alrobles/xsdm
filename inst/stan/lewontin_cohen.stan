@@ -93,10 +93,11 @@ generated quantities{ // calculate correlation matrix R from Cholesky matrix L
           w = to_vector(ts[i,j, ]);
           u = w - mu;
           u = w - mu;
-        if (u[k] < 0) { 
-          v[k] = ( u[k] / sigl[k] )^2; 
-        } else { 
-          v[k] = ( u[k] / sigr[k] )^2; 
+          if (u[k] < 0) { 
+            v[k] = ( u[k] / sigl[k] )^2; 
+          } else { 
+            v[k] = ( u[k] / sigr[k] )^2; 
+          }
         }
         response[j] = -0.5 * v;
         loglam[i] = mean(response);
