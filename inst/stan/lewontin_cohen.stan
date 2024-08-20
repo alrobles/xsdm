@@ -26,11 +26,11 @@ model{
   vector[P] v; 
   vector[P] w; 
 
-  // priors
+  // priors - all weakly informative
   mu ~ normal(0, 10);
-  sigl ~ exponential(0.01);
-  sigr ~ exponential(0.01);
-  c ~ normal(0, 100);
+  sigl ~ exponential(0.1);  // expected value and std = 10
+  sigr ~ exponential(0.1);  // expected value and std = 10
+  c ~ normal(0, 10);
   pd ~ uniform(0, 1);
   if (P > 1) {
     L ~ lkj_corr_cholesky(2.0);       // 2.0 = shape parameter

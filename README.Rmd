@@ -74,8 +74,8 @@ We also sample location at which we sampled the occurrence of this species:
 # uni-dimensional niche
 lambda <- function(x, mu, sigl, sigr) {
   u <- x - mu
+  u[u > 0] <- (u[u > 0] / sigr) ^ 2  #> before <= ! danger zone
   u[u <= 0] <- (u[u <= 0] / sigl) ^ 2
-  u[u > 0] <- (u[u > 0] / sigr) ^ 2
   lambda <- exp(-0.5 * u)
   return(lambda)
 }
@@ -85,15 +85,21 @@ pr <- function(x, c, pd) {
   return (pd / (1 + exp(c - x)))
 }
 
-# species parameters
-pars <- list(mu = 50, sigl = 10, sigr = 3, c = -5, pd = 0.9)
-
 # location vector
 p <- runif(500, 0, 100)
 p <- vect(matrix(p, ncol = 2))
 
 # occurrence at locations
 r_vals <- as.matrix(terra::extract(r, p))
+scalings <- data.frame(
+  avg = mean(as.matrix(r_vals)),
+  std = sd(as.matrix(r_vals))
+)
+r_vals <- (r_vals - mean(r_vals)) / sd(r_vals)  # scaling helps with fitting
+
+# species parameters
+pars <- list(mu = 0, sigl = 0.4, sigr = 0.2, c = -3, pd = 0.9)
+
 lambdas <- lambda(
   as.matrix(r_vals),
   mu = pars$mu, sigl = pars$sigl, sigr = pars$sigr
@@ -139,12 +145,12 @@ par(oldpar)
 We are then ready to fit XSDM using the Lewontin-Cohen model and one climatic predictor: 
 
 ```{r xsdm, cache=TRUE}
-<!-- scaled_r <- scale(r)          # scaling helps with fitting -->
+scaled_r <- (r - scalings$avg) / scalings$std
 niche <- lewontin_cohen(
-  list(r), p,                  # first argument should always be a list
-  warmup = 1000, iter = 2000,  # already ok with this
+  list(scaled_r), p,  # first argument should always be a list
+  warmup = 100, iter = 200,
   cores = 4, chains = 4,
-  refresh = 500
+  refresh = 10
 )
 
 rstan::traceplot(niche, pars = c("mu", "sigl", "sigr", "c", "pd"))
