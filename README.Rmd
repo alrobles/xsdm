@@ -2,6 +2,117 @@
 output: github_document
 ---
 
+# Start of testing
+
+```{r}
+library(xsdm)
+library(terra)
+
+# a nice symmetric cliamte
+mus <- rast(matrix(NA, 1e2, 1e2))
+xy <- xyFromCell(mus, seq_len(ncell(mus)))
+dist <- sqrt(rowSums( (xy - c(50, 50))^2 ))
+values(mus)[, 1] <- dist
+mus <- matrix(mus, nrow = 1e2, byrow = TRUE)
+
+r <- array(NA, dim = c(1e2, 1e2, 30))
+for (i in seq_len(nrow(r))) {
+  for (j in seq_len(ncol(r))) {
+    r[i, j, ] <- rnorm(30, mus[i, j], 15)
+  }
+}
+r <- rast(r)
+names(r) <- seq_len(nlyr(r)) #years, starting from 1
+plot(c(mean(r), app(r, "sd")))
+
+# uni-dimensional niche
+lambda <- function(x, mu, sigl, sigr) {
+  u <- x - mu
+  u[u > 0] <- (u[u > 0] / sigr) ^ 2  #> before <= ! danger zone
+  u[u <= 0] <- (u[u <= 0] / sigl) ^ 2
+  lambda <- exp(-0.5 * u)
+  return(lambda)
+}
+
+# probability of detection
+pr <- function(x, c, pd) {
+  return (pd / (1 + exp(c - x)))
+}
+
+# location vector
+p <- runif(500, 0, 100)
+p <- vect(matrix(p, ncol = 2))
+
+# occurrence at locations
+r_vals <- as.matrix(terra::extract(r, p))
+scalings <- data.frame(
+  avg = mean(as.matrix(r_vals)),
+  std = sd(as.matrix(r_vals))
+)
+r_vals <- (r_vals - mean(r_vals)) / sd(r_vals)  # scaling helps with fitting
+
+# species parameters
+pars <- list(mu = 0, sigl = 0.4, sigr = 0.2, c = -3, pd = 0.9)
+
+lambdas <- lambda(
+  as.matrix(r_vals),
+  mu = pars$mu, sigl = pars$sigl, sigr = pars$sigr
+)
+ltsgr <- rowMeans(log(lambdas))
+P <- pr(ltsgr, c = pars$c, pd = pars$pd)
+p$occ <- rbinom(length(p), 1, prob = P)
+table(p$occ)
+
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 2))
+plot(
+  sort(r_vals), lambdas[order(r_vals)], 
+  type = "l", frame = FALSE,
+  xlab = expression("Climate (e"[t]*")"),
+  ylab = expression(lambda[t]),
+)
+plot(
+  rowMeans(r_vals), ltsgr, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "ltsgr",
+)
+plot(
+  rowMeans(r_vals), P, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "Probability of detection",
+)
+plot(
+  rowMeans(r_vals), p$occ, 
+  frame = FALSE,
+  xlab = "Mean climate",
+  ylab = "Occurrence",
+)
+par(oldpar)
+
+scaled_r <- (r - scalings$avg) / scalings$std
+niche <- lewontin_cohen(
+  list(scaled_r), p,  # first argument should always be a list
+  warmup = 100, iter = 200,
+  cores = 4, chains = 4,
+  refresh = 10
+)
+
+rstan::traceplot(niche, pars = c("mu", "sigl", "sigr", "c", "pd"))
+summary(niche, c("mu", "sigl", "sigr", "c", "pd"))$summary
+rstan::extract(niche, c("mu"))
+
+```
+
+# End of testing
+
+```
+
+
+
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. -->
 
@@ -158,3 +269,4 @@ summary(niche, c("mu", "sigl", "sigr", "c", "pd"))$summary
 rstan::extract(niche, c("mu"))
 
 ```
+

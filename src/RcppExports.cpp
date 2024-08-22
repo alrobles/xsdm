@@ -13,9 +13,11 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 
 RcppExport SEXP _rcpp_module_boot_stan_fit4lewontin_cohen_mod();
+RcppExport SEXP _rcpp_module_boot_stan_fit4lewontin_cohen_univariate_mod();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_stan_fit4lewontin_cohen_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4lewontin_cohen_mod, 0},
+    {"_rcpp_module_boot_stan_fit4lewontin_cohen_univariate_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4lewontin_cohen_univariate_mod, 0},
     {NULL, NULL, 0}
 };
 

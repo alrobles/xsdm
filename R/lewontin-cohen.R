@@ -58,27 +58,50 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
     ),
     chains
   )
-  if (length(x) == 1) init <- "random"  #ISSUE cannot make this work for uni-dimensional cases. I think the problem is that this is a vector in Stan, but is passed as a real.
-
   # need a list for each chains
-  dat <- rep(
-    list(
-      N = length(p),
-      M = ncol(climate),
-      P = dim(climate)[3],
-      ts = climate,
-      occ = p$occ
-    ),
-    chains
+  dat <- list(
+    N = length(p),
+    M = ncol(climate),
+    P = dim(climate)[3],
+    ts = climate,
+    occ = p$occ
   )
 
-  fit <- sampling(
-    stanmodels$lewontin_cohen,
-    data = dat,
-    init = init,
-    chains = chains,
-    ...
-  )
+  if (length(x) == 1) {  # univariate model is standalone
+    dat$ts <- dat$ts[, , 1]  # needed for Stan to initialize it properly
+
+    init <- rep(
+      list(
+        list(
+          mu = mean(climate),
+          sigl = sd(climate),
+          sigr = sd(climate),
+          c = -5,
+          pd = 0.90
+        )
+      ),
+      chains
+    )
+    # "random"  # ISSUE cannot make this work for uni-dimensional cases. 
+    #                   # I think the problem is that this is a vector in Stan, 
+    #                   # but is passed as a real.
+
+    fit <- sampling(
+      stanmodels$lewontin_cohen_univariate,
+      data = dat,
+      init = init,
+      chains = chains,
+      ...
+    )
+  } else {
+    fit <- sampling(
+      stanmodels$lewontin_cohen,
+      data = dat,
+      init = init,
+      chains = chains,
+      ...
+    )
+  }
 
   return(fit)
 }
