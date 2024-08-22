@@ -69,23 +69,6 @@ lewontin_cohen <- function(x, p, chains = 4, ...) {
 
   if (length(x) == 1) {  # univariate model is standalone
     dat$ts <- dat$ts[, , 1]  # needed for Stan to initialize it properly
-
-    init <- rep(
-      list(
-        list(
-          mu = mean(climate),
-          sigl = sd(climate),
-          sigr = sd(climate),
-          c = -5,
-          pd = 0.90
-        )
-      ),
-      chains
-    )
-    # "random"  # ISSUE cannot make this work for uni-dimensional cases. 
-    #                   # I think the problem is that this is a vector in Stan, 
-    #                   # but is passed as a real.
-
     fit <- sampling(
       stanmodels$lewontin_cohen_univariate,
       data = dat,

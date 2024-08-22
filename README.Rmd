@@ -28,8 +28,8 @@ plot(c(mean(r), app(r, "sd")))
 # uni-dimensional niche
 lambda <- function(x, mu, sigl, sigr) {
   u <- x - mu
-  u[u > 0] <- (u[u > 0] / sigr) ^ 2  #> before <= ! danger zone
-  u[u <= 0] <- (u[u <= 0] / sigl) ^ 2
+  u[u >= 0] <- (u[u > 0] / sigr) ^ 2  #> before <= ! danger zone
+  u[u < 0] <- (u[u <= 0] / sigl) ^ 2
   lambda <- exp(-0.5 * u)
   return(lambda)
 }
@@ -40,7 +40,7 @@ pr <- function(x, c, pd) {
 }
 
 # location vector
-p <- runif(500, 0, 100)
+p <- runif(300, 0, 100)
 p <- vect(matrix(p, ncol = 2))
 
 # occurrence at locations
@@ -49,10 +49,10 @@ scalings <- data.frame(
   avg = mean(as.matrix(r_vals)),
   std = sd(as.matrix(r_vals))
 )
-r_vals <- (r_vals - mean(r_vals)) / sd(r_vals)  # scaling helps with fitting
+r_vals <- (r_vals - scalings$avg) / scalings$std  # scaling helps with fitting
 
 # species parameters
-pars <- list(mu = 0, sigl = 0.4, sigr = 0.2, c = -3, pd = 0.9)
+pars <- list(mu = 0, sigl = 0.4, sigr = 0.2, c = -5, pd = 0.9)
 
 lambdas <- lambda(
   as.matrix(r_vals),
@@ -69,25 +69,29 @@ plot(
   sort(r_vals), lambdas[order(r_vals)], 
   type = "l", frame = FALSE,
   xlab = expression("Climate (e"[t]*")"),
-  ylab = expression(lambda[t]),
+  ylab = expression(lambda[t])
 )
 plot(
   rowMeans(r_vals), ltsgr, 
   frame = FALSE,
   xlab = "Mean climate",
-  ylab = "ltsgr",
+  ylab = "ltsgr"
 )
 plot(
   rowMeans(r_vals), P, 
   frame = FALSE,
   xlab = "Mean climate",
-  ylab = "Probability of detection",
+  ylab = "Probability of detection"
 )
 plot(
   rowMeans(r_vals), p$occ, 
   frame = FALSE,
   xlab = "Mean climate",
-  ylab = "Occurrence",
+  ylab = "Occurrence"
+)
+lines(
+  sort(r_vals), lambdas[order(r_vals)], 
+  col = "dodgerblue", lw = 2
 )
 par(oldpar)
 

@@ -22,20 +22,18 @@ model{
   vector[N] loglam;
   real u; 
   real v; 
-  real w; 
 
   // priors - all weakly informative
   mu ~ normal(0, 10);
-  sigl ~ exponential(0.1);  // expected value and std = 10
-  sigr ~ exponential(0.1);  // expected value and std = 10
+  sigl ~ exponential(1);  // expected value and std = 10
+  sigr ~ exponential(1);  // expected value and std = 10
   c ~ normal(0, 10);
   pd ~ uniform(0, 1);
 
   // likelihood
   for(i in 1:N){                      // loop over locations
     for(j in 1:M){                    // loop over time
-      w = ts[i, j];
-      u = w - mu;
+      u = ts[i, j] - mu;
       if (u < 0) { 
         v = ( u / sigl )^2; 
       } else { 
@@ -54,15 +52,12 @@ generated quantities{ // calculate correlation matrix R from Cholesky matrix L
     vector[M] response;
     vector[N] loglam;
     real u; 
-    real v; 
-    real w; 
+    real v;
     
     // likelihood
     for(i in 1:N){                      // loop over locations
       for(j in 1:M){                    // loop over time
-        w = ts[i, j];
-        u = w - mu;
-        u = w - mu;
+        u = ts[i, j] - mu;
         if (u < 0) { 
           v = ( u / sigl )^2; 
         } else { 
