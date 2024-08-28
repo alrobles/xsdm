@@ -27,63 +27,58 @@ namespace model_lewontin_cohen_univariate_namespace {
 using stan::model::model_base_crtp;
 using namespace stan::math;
 stan::math::profile_map profiles__;
-static constexpr std::array<const char*, 64> locations_array__ =
+static constexpr std::array<const char*, 59> locations_array__ =
   {" (found before start of program)",
   " (in 'lewontin_cohen_univariate', line 9, column 2 to column 10)",
   " (in 'lewontin_cohen_univariate', line 10, column 2 to column 21)",
   " (in 'lewontin_cohen_univariate', line 11, column 2 to column 21)",
   " (in 'lewontin_cohen_univariate', line 14, column 2 to column 9)",
   " (in 'lewontin_cohen_univariate', line 15, column 2 to column 27)",
-  " (in 'lewontin_cohen_univariate', line 47, column 2 to column 20)",
-  " (in 'lewontin_cohen_univariate', line 49, column 11 to column 12)",
-  " (in 'lewontin_cohen_univariate', line 49, column 4 to column 23)",
-  " (in 'lewontin_cohen_univariate', line 50, column 11 to column 12)",
-  " (in 'lewontin_cohen_univariate', line 50, column 4 to column 21)",
-  " (in 'lewontin_cohen_univariate', line 51, column 4 to column 11)",
-  " (in 'lewontin_cohen_univariate', line 52, column 4 to column 11)",
-  " (in 'lewontin_cohen_univariate', line 53, column 4 to column 11)",
-  " (in 'lewontin_cohen_univariate', line 58, column 8 to column 21)",
-  " (in 'lewontin_cohen_univariate', line 59, column 8 to column 19)",
-  " (in 'lewontin_cohen_univariate', line 60, column 8 to column 19)",
-  " (in 'lewontin_cohen_univariate', line 64, column 10 to column 29)",
-  " (in 'lewontin_cohen_univariate', line 63, column 15 to line 65, column 9)",
-  " (in 'lewontin_cohen_univariate', line 62, column 10 to column 29)",
-  " (in 'lewontin_cohen_univariate', line 61, column 19 to line 63, column 9)",
-  " (in 'lewontin_cohen_univariate', line 61, column 8 to line 65, column 9)",
-  " (in 'lewontin_cohen_univariate', line 66, column 8 to column 31)",
-  " (in 'lewontin_cohen_univariate', line 57, column 19 to line 67, column 7)",
-  " (in 'lewontin_cohen_univariate', line 57, column 6 to line 67, column 7)",
-  " (in 'lewontin_cohen_univariate', line 68, column 6 to column 33)",
-  " (in 'lewontin_cohen_univariate', line 69, column 6 to column 74)",
-  " (in 'lewontin_cohen_univariate', line 56, column 17 to line 70, column 5)",
-  " (in 'lewontin_cohen_univariate', line 56, column 4 to line 70, column 5)",
-  " (in 'lewontin_cohen_univariate', line 47, column 20 to line 71, column 3)",
+  " (in 'lewontin_cohen_univariate', line 45, column 2 to column 20)",
+  " (in 'lewontin_cohen_univariate', line 47, column 11 to column 12)",
+  " (in 'lewontin_cohen_univariate', line 47, column 4 to column 23)",
+  " (in 'lewontin_cohen_univariate', line 48, column 11 to column 12)",
+  " (in 'lewontin_cohen_univariate', line 48, column 4 to column 21)",
+  " (in 'lewontin_cohen_univariate', line 49, column 4 to column 11)",
+  " (in 'lewontin_cohen_univariate', line 50, column 4 to column 11)",
+  " (in 'lewontin_cohen_univariate', line 55, column 8 to column 26)",
+  " (in 'lewontin_cohen_univariate', line 59, column 10 to column 29)",
+  " (in 'lewontin_cohen_univariate', line 58, column 15 to line 60, column 9)",
+  " (in 'lewontin_cohen_univariate', line 57, column 10 to column 29)",
+  " (in 'lewontin_cohen_univariate', line 56, column 19 to line 58, column 9)",
+  " (in 'lewontin_cohen_univariate', line 56, column 8 to line 60, column 9)",
+  " (in 'lewontin_cohen_univariate', line 61, column 8 to column 31)",
+  " (in 'lewontin_cohen_univariate', line 54, column 19 to line 62, column 7)",
+  " (in 'lewontin_cohen_univariate', line 54, column 6 to line 62, column 7)",
+  " (in 'lewontin_cohen_univariate', line 63, column 6 to column 33)",
+  " (in 'lewontin_cohen_univariate', line 64, column 6 to column 74)",
+  " (in 'lewontin_cohen_univariate', line 53, column 17 to line 65, column 5)",
+  " (in 'lewontin_cohen_univariate', line 53, column 4 to line 65, column 5)",
+  " (in 'lewontin_cohen_univariate', line 45, column 20 to line 66, column 3)",
   " (in 'lewontin_cohen_univariate', line 19, column 9 to column 10)",
   " (in 'lewontin_cohen_univariate', line 19, column 2 to column 21)",
   " (in 'lewontin_cohen_univariate', line 20, column 9 to column 10)",
   " (in 'lewontin_cohen_univariate', line 20, column 2 to column 19)",
   " (in 'lewontin_cohen_univariate', line 21, column 2 to column 9)",
   " (in 'lewontin_cohen_univariate', line 22, column 2 to column 9)",
-  " (in 'lewontin_cohen_univariate', line 23, column 2 to column 9)",
-  " (in 'lewontin_cohen_univariate', line 25, column 2 to column 21)",
-  " (in 'lewontin_cohen_univariate', line 26, column 2 to column 26)",
-  " (in 'lewontin_cohen_univariate', line 27, column 2 to column 26)",
-  " (in 'lewontin_cohen_univariate', line 28, column 2 to column 20)",
-  " (in 'lewontin_cohen_univariate', line 29, column 2 to column 21)",
-  " (in 'lewontin_cohen_univariate', line 33, column 6 to column 19)",
-  " (in 'lewontin_cohen_univariate', line 34, column 6 to column 17)",
-  " (in 'lewontin_cohen_univariate', line 38, column 8 to column 27)",
-  " (in 'lewontin_cohen_univariate', line 37, column 13 to line 39, column 7)",
+  " (in 'lewontin_cohen_univariate', line 24, column 2 to column 21)",
+  " (in 'lewontin_cohen_univariate', line 25, column 2 to column 24)",
+  " (in 'lewontin_cohen_univariate', line 26, column 2 to column 24)",
+  " (in 'lewontin_cohen_univariate', line 27, column 2 to column 20)",
+  " (in 'lewontin_cohen_univariate', line 28, column 2 to column 21)",
+  " (in 'lewontin_cohen_univariate', line 32, column 6 to column 24)",
   " (in 'lewontin_cohen_univariate', line 36, column 8 to column 27)",
-  " (in 'lewontin_cohen_univariate', line 35, column 17 to line 37, column 7)",
-  " (in 'lewontin_cohen_univariate', line 35, column 6 to line 39, column 7)",
-  " (in 'lewontin_cohen_univariate', line 40, column 6 to column 29)",
-  " (in 'lewontin_cohen_univariate', line 32, column 17 to line 41, column 5)",
-  " (in 'lewontin_cohen_univariate', line 32, column 4 to line 41, column 5)",
-  " (in 'lewontin_cohen_univariate', line 42, column 4 to column 31)",
-  " (in 'lewontin_cohen_univariate', line 31, column 15 to line 43, column 3)",
-  " (in 'lewontin_cohen_univariate', line 31, column 2 to line 43, column 3)",
-  " (in 'lewontin_cohen_univariate', line 44, column 2 to column 46)",
+  " (in 'lewontin_cohen_univariate', line 35, column 13 to line 37, column 7)",
+  " (in 'lewontin_cohen_univariate', line 34, column 8 to column 27)",
+  " (in 'lewontin_cohen_univariate', line 33, column 17 to line 35, column 7)",
+  " (in 'lewontin_cohen_univariate', line 33, column 6 to line 37, column 7)",
+  " (in 'lewontin_cohen_univariate', line 38, column 6 to column 29)",
+  " (in 'lewontin_cohen_univariate', line 31, column 17 to line 39, column 5)",
+  " (in 'lewontin_cohen_univariate', line 31, column 4 to line 39, column 5)",
+  " (in 'lewontin_cohen_univariate', line 40, column 4 to column 31)",
+  " (in 'lewontin_cohen_univariate', line 30, column 15 to line 41, column 3)",
+  " (in 'lewontin_cohen_univariate', line 30, column 2 to line 41, column 3)",
+  " (in 'lewontin_cohen_univariate', line 42, column 2 to column 46)",
   " (in 'lewontin_cohen_univariate', line 2, column 2 to column 8)",
   " (in 'lewontin_cohen_univariate', line 3, column 2 to column 8)",
   " (in 'lewontin_cohen_univariate', line 4, column 8 to column 9)",
@@ -91,7 +86,7 @@ static constexpr std::array<const char*, 64> locations_array__ =
   " (in 'lewontin_cohen_univariate', line 5, column 8 to column 9)",
   " (in 'lewontin_cohen_univariate', line 5, column 11 to column 12)",
   " (in 'lewontin_cohen_univariate', line 5, column 2 to column 22)",
-  " (in 'lewontin_cohen_univariate', line 47, column 9 to column 10)"};
+  " (in 'lewontin_cohen_univariate', line 45, column 9 to column 10)"};
 #include <stan_meta_header.hpp>
 class model_lewontin_cohen_univariate final : public model_base_crtp<model_lewontin_cohen_univariate> {
 private:
@@ -121,59 +116,59 @@ public:
     try {
       int pos__ = std::numeric_limits<int>::min();
       pos__ = 1;
-      current_statement__ = 56;
+      current_statement__ = 51;
       context__.validate_dims("data initialization", "N", "int",
         std::vector<size_t>{});
       N = std::numeric_limits<int>::min();
-      current_statement__ = 56;
+      current_statement__ = 51;
       N = context__.vals_i("N")[(1 - 1)];
-      current_statement__ = 57;
+      current_statement__ = 52;
       context__.validate_dims("data initialization", "M", "int",
         std::vector<size_t>{});
       M = std::numeric_limits<int>::min();
-      current_statement__ = 57;
+      current_statement__ = 52;
       M = context__.vals_i("M")[(1 - 1)];
-      current_statement__ = 58;
+      current_statement__ = 53;
       stan::math::validate_non_negative_index("occ", "N", N);
-      current_statement__ = 59;
+      current_statement__ = 54;
       context__.validate_dims("data initialization", "occ", "int",
         std::vector<size_t>{static_cast<size_t>(N)});
       occ = std::vector<int>(N, std::numeric_limits<int>::min());
-      current_statement__ = 59;
+      current_statement__ = 54;
       occ = context__.vals_i("occ");
-      current_statement__ = 59;
+      current_statement__ = 54;
       stan::math::check_greater_or_equal(function__, "occ", occ, 0);
-      current_statement__ = 59;
+      current_statement__ = 54;
       stan::math::check_less_or_equal(function__, "occ", occ, 1);
-      current_statement__ = 60;
+      current_statement__ = 55;
       stan::math::validate_non_negative_index("ts", "N", N);
-      current_statement__ = 61;
+      current_statement__ = 56;
       stan::math::validate_non_negative_index("ts", "M", M);
-      current_statement__ = 62;
+      current_statement__ = 57;
       context__.validate_dims("data initialization", "ts", "double",
         std::vector<size_t>{static_cast<size_t>(N), static_cast<size_t>(M)});
       ts = std::vector<std::vector<double>>(N,
              std::vector<double>(M, std::numeric_limits<double>::quiet_NaN()));
       {
         std::vector<local_scalar_t__> ts_flat__;
-        current_statement__ = 62;
+        current_statement__ = 57;
         ts_flat__ = context__.vals_r("ts");
-        current_statement__ = 62;
+        current_statement__ = 57;
         pos__ = 1;
-        current_statement__ = 62;
+        current_statement__ = 57;
         for (int sym1__ = 1; sym1__ <= M; ++sym1__) {
-          current_statement__ = 62;
+          current_statement__ = 57;
           for (int sym2__ = 1; sym2__ <= N; ++sym2__) {
-            current_statement__ = 62;
+            current_statement__ = 57;
             stan::model::assign(ts, ts_flat__[(pos__ - 1)],
               "assigning variable ts", stan::model::index_uni(sym2__),
               stan::model::index_uni(sym1__));
-            current_statement__ = 62;
+            current_statement__ = 57;
             pos__ = (pos__ + 1);
           }
         }
       }
-      current_statement__ = 63;
+      current_statement__ = 58;
       stan::math::validate_non_negative_index("log_lik", "N", N);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -226,53 +221,51 @@ public:
       pd = in__.template read_constrain_lub<local_scalar_t__, jacobian__>(0,
              1, lp__);
       {
-        current_statement__ = 30;
+        current_statement__ = 27;
         stan::math::validate_non_negative_index("response", "M", M);
         Eigen::Matrix<local_scalar_t__,-1,1> response =
           Eigen::Matrix<local_scalar_t__,-1,1>::Constant(M, DUMMY_VAR__);
-        current_statement__ = 32;
+        current_statement__ = 29;
         stan::math::validate_non_negative_index("loglam", "N", N);
         Eigen::Matrix<local_scalar_t__,-1,1> loglam =
           Eigen::Matrix<local_scalar_t__,-1,1>::Constant(N, DUMMY_VAR__);
         local_scalar_t__ u = DUMMY_VAR__;
         local_scalar_t__ v = DUMMY_VAR__;
-        local_scalar_t__ w = DUMMY_VAR__;
-        current_statement__ = 37;
+        current_statement__ = 33;
         lp_accum__.add(stan::math::normal_lpdf<propto__>(mu, 0, 10));
-        current_statement__ = 38;
-        lp_accum__.add(stan::math::exponential_lpdf<propto__>(sigl, 0.1));
-        current_statement__ = 39;
-        lp_accum__.add(stan::math::exponential_lpdf<propto__>(sigr, 0.1));
-        current_statement__ = 40;
+        current_statement__ = 34;
+        lp_accum__.add(stan::math::exponential_lpdf<propto__>(sigl, 1));
+        current_statement__ = 35;
+        lp_accum__.add(stan::math::exponential_lpdf<propto__>(sigr, 1));
+        current_statement__ = 36;
         lp_accum__.add(stan::math::normal_lpdf<propto__>(c, 0, 10));
-        current_statement__ = 41;
+        current_statement__ = 37;
         lp_accum__.add(stan::math::uniform_lpdf<propto__>(pd, 0, 1));
-        current_statement__ = 54;
+        current_statement__ = 49;
         for (int i = 1; i <= N; ++i) {
-          current_statement__ = 51;
+          current_statement__ = 46;
           for (int j = 1; j <= M; ++j) {
-            current_statement__ = 42;
-            w = stan::model::rvalue(ts, "ts", stan::model::index_uni(i),
-                  stan::model::index_uni(j));
+            current_statement__ = 38;
+            u = (stan::model::rvalue(ts, "ts", stan::model::index_uni(i),
+                   stan::model::index_uni(j))
+              - mu);
             current_statement__ = 43;
-            u = (w - mu);
-            current_statement__ = 48;
             if (stan::math::logical_lt(u, 0)) {
-              current_statement__ = 46;
+              current_statement__ = 41;
               v = stan::math::pow((u / sigl), 2);
             } else {
-              current_statement__ = 44;
+              current_statement__ = 39;
               v = stan::math::pow((u / sigr), 2);
             }
-            current_statement__ = 49;
+            current_statement__ = 44;
             stan::model::assign(response, (-0.5 * v),
               "assigning variable response", stan::model::index_uni(j));
           }
-          current_statement__ = 52;
+          current_statement__ = 47;
           stan::model::assign(loglam, stan::math::mean(response),
             "assigning variable loglam", stan::model::index_uni(i));
         }
-        current_statement__ = 55;
+        current_statement__ = 50;
         lp_accum__.add(stan::math::bernoulli_lpmf<propto__>(occ,
                          stan::math::multiply(pd,
                            stan::math::inv_logit(
@@ -362,34 +355,30 @@ public:
             std::numeric_limits<double>::quiet_NaN());
         double u = std::numeric_limits<double>::quiet_NaN();
         double v = std::numeric_limits<double>::quiet_NaN();
-        double w = std::numeric_limits<double>::quiet_NaN();
-        current_statement__ = 28;
+        current_statement__ = 25;
         for (int i = 1; i <= N; ++i) {
-          current_statement__ = 24;
+          current_statement__ = 21;
           for (int j = 1; j <= M; ++j) {
-            current_statement__ = 14;
-            w = stan::model::rvalue(ts, "ts", stan::model::index_uni(i),
-                  stan::model::index_uni(j));
-            current_statement__ = 15;
-            u = (w - mu);
-            current_statement__ = 16;
-            u = (w - mu);
-            current_statement__ = 21;
+            current_statement__ = 13;
+            u = (stan::model::rvalue(ts, "ts", stan::model::index_uni(i),
+                   stan::model::index_uni(j))
+              - mu);
+            current_statement__ = 18;
             if (stan::math::logical_lt(u, 0)) {
-              current_statement__ = 19;
+              current_statement__ = 16;
               v = stan::math::pow((u / sigl), 2);
             } else {
-              current_statement__ = 17;
+              current_statement__ = 14;
               v = stan::math::pow((u / sigr), 2);
             }
-            current_statement__ = 22;
+            current_statement__ = 19;
             stan::model::assign(response, (-0.5 * v),
               "assigning variable response", stan::model::index_uni(j));
           }
-          current_statement__ = 25;
+          current_statement__ = 22;
           stan::model::assign(loglam, stan::math::mean(response),
             "assigning variable loglam", stan::model::index_uni(i));
-          current_statement__ = 26;
+          current_statement__ = 23;
           stan::model::assign(log_lik,
             stan::math::bernoulli_lpmf<false>(
               stan::model::rvalue(occ, "occ", stan::model::index_uni(i)), (pd

@@ -1,0 +1,93 @@
+#' @title XSDM Species Distribution Modeling
+#'
+#' @importFrom methods is
+#' @importFrom terra nlyr
+#' @importFrom stats sd
+#' @export
+#'
+#' @param x List of raster stacks. Each stack represent the timeseries
+#'  one climatic variable.
+#' @param p SpatVector with species' occurrences.
+#' @param model String, for now only `lewontin-cohen`.
+#' @param chains Ingeter, number of chains to run.  # ISSUE: this can be remove using ...names() to set a default within the function.
+#' @param ... Additional arguments for `rstan::sampling()`.
+#'
+#' @return An object of class `stanfit` returned by `rstan::sampling`
+#'
+xsdm <- function(x, p, model, chains = 4, ...) {
+  stopifnot(is(x, "list"))
+  stopifnot(all(sapply(x, \(x) is(x, "SpatRaster"))))
+  stopifnot(all(sapply(x, nlyr) > 1))
+  stopifnot(length(unique(sapply(x, nlyr))) == 1)
+  if (!"occ" %in% names(p)) {
+    stop("Missing 'occ' column in SpatVector.")
+  }
+  if (chains %% 1 != 0) {
+    stop("'chains' must be an integer.")
+  }
+
+  model_choices <- c("lewontin-cohen")
+  if (!model %in% model_choices) { 
+    stop(
+      "The model specified is not available. Current options are: ", 
+      paste(model_choices, collapse = ", ")
+    )
+  } 
+  if (tolower(model) == "lewontin-cohen") {
+    demographic_model <- "lewontin_cohen"
+    message(
+      "You are running XSDM using:\n",
+      "  - the Lewontin-Cohen\n",
+      "  - ", length(x), " climatic variable(s) as predictors"
+    )
+  }
+
+  d <- lapply(x, \(x) terra::extract(x, p, ID = FALSE))
+  # NAs need to be removed
+  empty <- lapply(d, \(x) which(is.na(x), arr.ind = TRUE)[, 1])
+  empty <- unique(unlist(empty))
+  if (length(empty) > 0) d <- lapply(d, \(d) d[-empty, ])
+  # need an array for stan
+  climate <- array(NA, dim = c(nrow(d[[1]]), ncol(d[[1]]), length(d)))
+  for (i in seq_along(x)) {
+    climate[, , i] <- as.matrix(d[[i]])
+  }
+
+  # initial values are obtained from the climate to facilitate fitting
+  R_init <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
+  diag(R_init) <- 1
+  init <- rep(
+    list(
+      list(
+        mu = apply(climate, MARGIN = 3, mean),
+        sigl = apply(climate, MARGIN = 3, sd),
+        sigr = apply(climate, MARGIN = 3, sd),
+        L = t(chol(R_init)),  # Cholesky factor with no correlation
+        c = -5,
+        pd = .90
+      )
+    ),
+    chains
+  )
+
+  # need a list for each chains
+  dat <- list(
+    N = length(p),
+    M = ncol(climate),
+    P = dim(climate)[3],
+    ts = climate,
+    occ = p$occ
+  )
+  
+  # ISSUE - there is probably a better solution to the following nested 'if'
+  if (demographic_model == "lewontin_cohen") {
+    if (length(x) == 1) {  # univariate model is standalone
+      dat$ts <- dat$ts[, , 1]  # needed for Stan to initialize it properly
+      fit <- .lewontin_cohen_univariate(dat, init, chains, ...)
+    } else {
+      fit <- .lewontin_cohen(dat, init, chains, ...)
+    }
+  }
+
+  return(fit)
+}
