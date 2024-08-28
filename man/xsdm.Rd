@@ -4,7 +4,7 @@
 \alias{xsdm}
 \title{XSDM Species Distribution Modeling}
 \usage{
-xsdm(x, p, model, chains = 4, ...)
+xsdm(x, p, model, ...)
 }
 \arguments{
 \item{x}{List of raster stacks. Each stack represent the timeseries
@@ -13,8 +13,6 @@ one climatic variable.}
 \item{p}{SpatVector with species' occurrences.}
 
 \item{model}{String, for now only \code{lewontin-cohen}.}
-
-\item{chains}{Ingeter, number of chains to run.  # ISSUE: this can be remove using ...names() to set a default within the function.}
 
 \item{...}{Additional arguments for \code{rstan::sampling()}.}
 }

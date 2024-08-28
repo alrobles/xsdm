@@ -9,21 +9,17 @@
 #'  one climatic variable.
 #' @param p SpatVector with species' occurrences.
 #' @param model String, for now only `lewontin-cohen`.
-#' @param chains Ingeter, number of chains to run.  # ISSUE: this can be remove using ...names() to set a default within the function.
 #' @param ... Additional arguments for `rstan::sampling()`.
 #'
 #' @return An object of class `stanfit` returned by `rstan::sampling`
 #'
-xsdm <- function(x, p, model, chains = 4, ...) {
+xsdm <- function(x, p, model, ...) {
   stopifnot(is(x, "list"))
   stopifnot(all(sapply(x, \(x) is(x, "SpatRaster"))))
   stopifnot(all(sapply(x, nlyr) > 1))
   stopifnot(length(unique(sapply(x, nlyr))) == 1)
   if (!"occ" %in% names(p)) {
     stop("Missing 'occ' column in SpatVector.")
-  }
-  if (chains %% 1 != 0) {
-    stop("'chains' must be an integer.")
   }
 
   model_choices <- c("lewontin-cohen")
@@ -54,6 +50,7 @@ xsdm <- function(x, p, model, chains = 4, ...) {
   }
 
   # initial values are obtained from the climate to facilitate fitting
+  if (!"chains" %in% ...names()) chains <- 4L  # set default chains = 4
   R_init <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
   diag(R_init) <- 1
   init <- rep(
