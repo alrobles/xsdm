@@ -4,7 +4,7 @@
 #'
 #' @docType package
 #' @name xsdm-package
-#' @aliases xsdm
+#' @aliases XSDM
 #' @useDynLib xsdm, .registration = TRUE
 #' @import methods
 #' @import Rcpp

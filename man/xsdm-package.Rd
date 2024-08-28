@@ -3,7 +3,7 @@
 \docType{package}
 \name{xsdm-package}
 \alias{xsdm-package}
-\alias{xsdm}
+\alias{XSDM}
 \title{The 'xsdm' package.}
 \description{
 A DESCRIPTION OF THE PACKAGE
