@@ -32,7 +32,11 @@ xsdm <- function(x, p, model, ...) {
     )
   }
 
-  if (!"chains" %in% ...names()) chains <- 4L  # default chains = 4
+  chains <- ifelse (
+    !"chains" %in% ...names(),
+    4L,  # default chains = 4
+    ...elt(which(...names() == "chains"))
+  )
 
   if (tolower(model) == "lewontin-cohen") {
     demographic_model <- "lewontin_cohen"

@@ -2,13 +2,40 @@
 output: github_document
 ---
 
+```{r setup}
+library(xsdm)
+library(terra)
+```
+
+# Guide for developers
+
+## Dry run
+
+I implemented a dry run option in `xsdm()`.
+This is useful to check that the inputs are corrects and to test
+how the dots parameters are handled.
+For instance, check the `test-dots-in-xsdm.R` script to see how to deal with such cases.
+
+```{r dryrun}
+# initialize minimal input to see dry run
+r <- matrix(1, ncol = 2, nrow = 2)
+r <- terra::rast(r)
+p <- terra::as.points(r)
+p$occ <- 1
+r <- list(c(r, r))
+xsdm(r, p, "lewontin-cohen", dry = TRUE)
+```
+
+This can be used, for example, to check that the number of chains to run are correctly specified in `...`:
+
+```{r dryrun-chains}
+xsdm(r, p, "lewontin-cohen", chains = 123, dry = TRUE)
+```
+
 # Start of testing
 
 ```{r}
-library(xsdm)
-library(terra)
-
-# a nice symmetric cliamte
+# a nice symmetric climate
 mus <- rast(matrix(NA, 1e2, 1e2))
 xy <- xyFromCell(mus, seq_len(ncell(mus)))
 dist <- sqrt(rowSums( (xy - c(50, 50))^2 ))
