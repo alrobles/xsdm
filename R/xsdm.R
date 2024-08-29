@@ -15,6 +15,8 @@
 #'
 xsdm <- function(x, p, model, ...) {
   stopifnot(is(x, "list"))
+  stopifnot(is(p, "SpatVector"))
+  stopifnot(is(model, "character"))
   stopifnot(all(sapply(x, \(x) is(x, "SpatRaster"))))
   stopifnot(all(sapply(x, nlyr) > 1))
   stopifnot(length(unique(sapply(x, nlyr))) == 1)
@@ -28,14 +30,27 @@ xsdm <- function(x, p, model, ...) {
       "The model specified is not available. Current options are: ", 
       paste(model_choices, collapse = ", ")
     )
-  } 
+  }
+
+  if (!"chains" %in% ...names()) chains <- 4L  # default chains = 4
+
   if (tolower(model) == "lewontin-cohen") {
     demographic_model <- "lewontin_cohen"
-    message(
-      "You are running XSDM using:\n",
-      "  - the Lewontin-Cohen\n",
-      "  - ", length(x), " climatic variable(s) as predictors"
-    )
+    demographic_model_mssg <- "Lewontin-Cohen"
+  }
+  message(
+    "You are running XSDM using:\n",
+    "  - ", demographic_model_mssg, "\n",
+    "  - ", length(x), " climatic variable(s) as predictors\n",
+    "  - ", chains, " chains"
+  )
+
+  # dry-run if passed an additional par `dry = TRUE`.
+  # As this is for development purposes only, I made this an 'hidden'
+  # par to be passed within the dots argument.
+  if ("dry" %in% ...names() && ...elt(which(...names() == "dry")) == TRUE) {
+    message("This was a dry run: exiting...")
+    return(NULL)
   }
 
   d <- lapply(x, \(x) terra::extract(x, p, ID = FALSE))
@@ -50,7 +65,6 @@ xsdm <- function(x, p, model, ...) {
   }
 
   # initial values are obtained from the climate to facilitate fitting
-  if (!"chains" %in% ...names()) chains <- 4L  # set default chains = 4
   R_init <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
   diag(R_init) <- 1
   init <- rep(
