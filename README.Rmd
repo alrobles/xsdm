@@ -3,8 +3,8 @@ output: github_document
 ---
 
 ```{r setup}
-library(xsdm)
 library(terra)
+library(xsdm)
 ```
 
 # Guide for developers
@@ -35,6 +35,9 @@ xsdm(r, p, "lewontin-cohen", chains = 123, dry = TRUE)
 # Start of testing
 
 ```{r}
+library(terra)
+library(xsdm)
+
 # a nice symmetric climate
 mus <- rast(matrix(NA, 1e2, 1e2))
 xy <- xyFromCell(mus, seq_len(ncell(mus)))
@@ -123,26 +126,20 @@ lines(
 par(oldpar)
 
 scaled_r <- (r - scalings$avg) / scalings$std
-niche <- lewontin_cohen(
-  list(scaled_r), p,  # first argument should always be a list
-  warmup = 100, iter = 200,
-  cores = 4, chains = 4,
-  refresh = 10
+niche <- xsdm(
+  list(scaled_r), p, "lewontin-cohen",
+  warmup = 100, iter = 200, cores = 4, chains = 4, refresh = 10,
+  dry = FALSE  # set to FALSE to run it
 )
 
 rstan::traceplot(niche, pars = c("mu", "sigl", "sigr", "c", "pd"))
 summary(niche, c("mu", "sigl", "sigr", "c", "pd"))$summary
 rstan::extract(niche, c("mu"))
-
 ```
 
 # End of testing
 
-```
-
-
-
-
+# Proper doc
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. -->
