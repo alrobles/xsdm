@@ -1,14 +1,19 @@
+//DAN: Adding notes for my own clarification. Eventually these are to 
+//be deleted, possibly inspiring changes to comments to clarify for the
+//next person.
+
 data {
-  int N; // observations
+  int N; // observations //DAN: I think this is number of locations, some are 
+                         //observations, some are going to be pseudo-absences
   int M; // timeseries length
-  int P; // environmental covariates
-  array[N] int<lower=0,upper=1> occ;
+  int P; // environmental covariates //NUMBER of env covars
+  array[N] int<lower=0,upper=1> occ; //DAN: Binary presence/pseudo-absence.
   array[N,M,P] real ts;
 }
 
 parameters {
   // demographic model
-  vector[P] mu;
+  vector[P] mu;  
   vector<lower=0>[P] sigl;
   vector<lower=0>[P] sigr;
   cholesky_factor_corr[P] L;          // corr R=L*L'
@@ -27,7 +32,10 @@ model{
   vector[P] w; 
 
   // priors - all weakly informative
-  mu ~ normal(0, 10);
+  mu ~ normal(0, 10); //DAN: See my comments in the univariate model on 1) how priors
+                      //make me nervous, 2) how this appears to assume the env data
+                      //have been somehow pre-normalized, and 3) how we are using the 
+                      //wrong notation here.
   sigl ~ exponential(0.1);  // expected value and std = 10
   sigr ~ exponential(0.1);  // expected value and std = 10
   c ~ normal(0, 10);
