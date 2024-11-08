@@ -71,15 +71,15 @@ xsdm <- function(x, p, model, ...) {
   }
 
   # initial values are obtained from the climate to facilitate fitting
-  R_init <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
-  diag(R_init) <- 1
-  init <- rep(
+  R_initial <- matrix(0, nrow = dim(climate)[3], ncol = dim(climate)[3])
+  diag(R_initial) <- 1
+  initial <- rep(
     list(
       list(
         mu = apply(climate, MARGIN = 3, mean),
         sigl = apply(climate, MARGIN = 3, sd),
         sigr = apply(climate, MARGIN = 3, sd),
-        L = t(chol(R_init)),  # Cholesky factor with no correlation
+        L = t(chol(R_initial)),  # Cholesky factor with no correlation
         c = -5,
         pd = .90
       )
@@ -99,10 +99,10 @@ xsdm <- function(x, p, model, ...) {
   # ISSUE - there is probably a better solution to the following nested 'if'
   if (demographic_model == "lewontin_cohen") {
     if (length(x) == 1) {  # univariate model is standalone
-      dat$ts <- dat$ts[, , 1]  # needed for Stan to initialize it properly
-      fit <- .lewontin_cohen_univariate(dat, init, chains, ...)
+      dat$ts <- dat$ts[, , 1]  # needed for Stan to initialialize it properly
+      fit <- .lewontin_cohen_univariate(dat, initial, chains, ...)
     } else {
-      fit <- .lewontin_cohen(dat, init, chains, ...)
+      fit <- .lewontin_cohen(dat, initial, chains, ...)
     }
   }
 

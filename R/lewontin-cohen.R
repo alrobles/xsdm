@@ -5,7 +5,7 @@
 #'
 #' @param dat List of data to be passed to `rstan::sampling()`.
 #' @param init Initial values to be passed to `rstan::sampling()`.
-#' @param chains Ingeter, number of chains to run.
+#' @param chains Integer, number of chains to run.
 #' @param ... Additional arguments for `rstan::sampling()`.
 #'
 #' @return An object of class `stanfit` returned by `rstan::sampling`

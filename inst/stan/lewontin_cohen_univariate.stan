@@ -1,7 +1,12 @@
+//DAN: Adding notes for my own clarification. Eventually these are to 
+//be deleted, possibly inspiring changes to comments to clarify for the
+//next person.
+
 data {
-  int N; // observations
+  int N; // observations //DAN: I think this is number of locations, some are 
+                         //observations, some are going to be pseudo-absences
   int M; // timeseries length
-  array[N] int<lower=0,upper=1> occ;
+  array[N] int<lower=0,upper=1> occ; //DAN: Binary presence/pseudo-absence.
   array[N, M] real ts;
 }
 
@@ -24,10 +29,19 @@ model{
   real v; 
 
   // priors - all weakly informative
-  mu ~ normal(0, 10);
+  mu ~ normal(0, 10); //DAN: Priors make me nervous. In particular, it seems to me 
+                      //this prior relies on having somehow standardized the 
+                      //environmental time series, not sure how 
   sigl ~ exponential(1);  // expected value and std = 10
   sigr ~ exponential(1);  // expected value and std = 10
-  c ~ normal(0, 10);
+  c ~ normal(0, 10); //DAN: These parameters are not the parameters of the same name
+                     //in the math write-ups we have, instead they are the re-parameterized
+                     //versions, the ones for which we used tildes in the math documents,
+                     //including in the paper. I find that notation choice confusing and 
+                     //possibly error-producing and think we should consider changing
+                     //notation here and elsewhere, e.g., changing sigl to sigl_tilde, etc.
+                     //I did not do it myself because I don't want to risk breaking anything
+                     //before I understand the whole code suite.
   pd ~ uniform(0, 1);
 
   // likelihood
@@ -46,6 +60,10 @@ model{
   occ ~ bernoulli(pd * inv_logit(loglam - c)); 
 }
 
+//DAN: I do not currently understand the purpose for the "generated_quantities",
+//but I wonder if the comment below mentioning Cholesky might be inaccurate?
+//This is supposed to be the *univariate* L-C, which means there should not be
+//and Cholesky decompositions involved anywhere.
 generated quantities{ // calculate correlation matrix R from Cholesky matrix L
   vector[N] log_lik;{
     // auxiliary variables
