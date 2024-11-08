@@ -57,6 +57,8 @@ xsdm <- function(x, p, model, ...) {
     return(NULL)
   }
 
+  # preprocessing of data for `sampling()`
+  # from stack to matrix timeseries
   d <- lapply(x, \(x) terra::extract(x, p, ID = FALSE))
   # NAs need to be removed
   empty <- lapply(d, \(x) which(is.na(x), arr.ind = TRUE)[, 1])
