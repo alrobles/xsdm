@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>absenceses_pts.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Placemark>
+		<name>a1</name>
+		<snippet></snippet>
+		<LookAt>
+			<longitude>-105.0106316631876</longitude>
+			<latitude>37.38733242036145</latitude>
+			<altitude>0</altitude>
+			<heading>0.0512128993411969</heading>
+			<tilt>26.57719997165647</tilt>
+			<range>148617.8264378341</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#m_ylw-pushpin</styleUrl>
+		<MultiGeometry>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-104.1674648874631,37.93347489373173,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-104.4130586620323,37.91442153175296,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-104.111925523739,37.71030494626836,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-104.894200957446,37.78856991920904,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-105.2805691328974,37.72495943712126,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-105.8077151224071,37.66786321942006,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-105.832935337561,37.26154972733,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-104.4268209268036,37.03348826021419,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-105.7180742977598,37.90458256343015,0</coordinates>
+			</Point>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-105.7191250095319,37.05602640685418,0</coordinates>
+			</Point>
+		</MultiGeometry>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.6.10155"></atom:link>
+	</Placemark>
+</Document>
+</kml>
