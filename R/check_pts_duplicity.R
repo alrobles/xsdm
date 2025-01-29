@@ -11,7 +11,7 @@
 #' two (or more) points in the same cell
 #' @examples
 #' \dontrun{
-#' occ <- xsdm::mus_virtualis
+#' occ <- mus_virtualis
 #' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 #' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
 #' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
