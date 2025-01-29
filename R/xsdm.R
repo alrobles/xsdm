@@ -15,6 +15,8 @@
 #' #Virtual species presence/absence points
 #' pts <- mus_virtualis
 #' xsdm(envData, occ = pts)
+#' pts <- rbind(mus_virtualis, mus_virtualis[1:3, ])
+#' xsdm(envData, occ = pts)
 xsdm <- function(env_data = list(),
                  occ = data.frame(),
                  ...){
@@ -24,6 +26,11 @@ xsdm <- function(env_data = list(),
 
   xsdm_model <-  new_xsdm(env_data, occ, call = this.call)
   xsdm_model <-  validate_xsdm(xsdm_model)
+
+  pts <- terra::vect(occ, geom = c("longitude", "latitude"))
+  stopifnot("The points has duplicity in the environmental raster" =
+              check_pts_duplicity(pts, env_data) == TRUE) |>
+    try()
 
   return(xsdm_model)
 

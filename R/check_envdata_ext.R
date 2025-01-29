@@ -10,12 +10,12 @@
 #' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 #' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
 #' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-#' check_envdata_ext(envData)
+#' xsdm:::check_envdata_ext(envData)
 #' }
 check_envdata_ext <- function(envData){
   ext_vect <- function(r_env){
     ex <- terra::ext(r_env)
-    ex@ptr$vector
+    ex@pntr$vector
   }
 
   Reduce(idem, Map(ext_vect, envData) )

@@ -28,4 +28,6 @@ envData <- list(bio1 = bio1_ts, bio12 = bio12_ts)
 #Virtual species presence/absence points
 pts <- mus_virtualis
 xsdm(envData, occ = pts)
+pts <- rbind(mus_virtualis, mus_virtualis[1:3, ])
+xsdm(envData, occ = pts)
 }

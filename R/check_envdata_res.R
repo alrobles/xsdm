@@ -10,7 +10,7 @@
 #' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 #' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
 #' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-#' check_envdata_res(envData)
+#' xsdm:::check_envdata_res(envData)
 #' }
 check_envdata_res <- function(envData){
   Reduce(idem, Map(terra::res, envData) )

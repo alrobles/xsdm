@@ -9,8 +9,9 @@
 #' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
 #' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
 #' pts <- mus_virtualis
+#' pts <- rbind(pts, pts)
 #'
-#' new_xsdm(envData, occ = pts) |> validate_xsdm()
+#' xsdm:::new_xsdm(envData, occ = pts) |> xsdm:::validate_xsdm()
 #' }
 
 validate_xsdm <- function(xsdm_object){
@@ -56,6 +57,10 @@ validate_xsdm <- function(xsdm_object){
 
   stopifnot("The presence column in ocurrence data.frame has NA entries" =
               check_pts_presence_na(values$occ) == TRUE  ) |>
+    try()
+
+  stopifnot("The point points are duplicated. Check clean_data" =
+              xsdm:::check_pts_duplicity(values$occ, values$envData) == FALSE) |>
     try()
 
 
