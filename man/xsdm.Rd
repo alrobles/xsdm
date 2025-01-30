@@ -23,11 +23,8 @@ Constructor function for the class xsdm
 \examples{
 
 bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio12_ts)
+envData <- list(bio1 = bio1_ts)
 #Virtual species presence/absence points
 pts <- mus_virtualis
-xsdm(envData, occ = pts)
-pts <- rbind(mus_virtualis, mus_virtualis[1:3, ])
 xsdm(envData, occ = pts)
 }

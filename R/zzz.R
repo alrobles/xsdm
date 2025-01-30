@@ -5,15 +5,13 @@
 
 xsdmStartupMessage <- function()
 {
-  # Startup message obtained as
-  # > figlet -f slant MCLUST
   msg <- c(paste0(
     "              _
 __  _____  __| |_ __ ___
 \\ \\/ / __|/ _` | '_ ` _ \\
  >  <\\__ \\ (_| | | | | | |
 /_/\\_\\___/\\__,_|_| |_| |_|    version ",
-    packageVersion("xsdm")),
+    utils::packageVersion("xsdm")),
     "\nType 'citation(\"xsdm\")' for citing this R package in publications.")
   return(msg)
 }
@@ -25,7 +23,7 @@ __  _____  __| |_ __ ___
   # startup message
   msg <- xsdmStartupMessage()
   if(!interactive())
-    msg[1] <- paste("Package 'xsdm' version", packageVersion("xsdm"))
+    msg[1] <- paste("Package 'xsdm' version", utils::packageVersion("xsdm"))
   packageStartupMessage(msg)
   invisible()
 }

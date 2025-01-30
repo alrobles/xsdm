@@ -60,7 +60,7 @@ validate_xsdm <- function(xsdm_object){
     try()
 
   stopifnot("The point points are duplicated. Check clean_data" =
-              xsdm:::check_pts_duplicity(values$occ, values$envData) == FALSE) |>
+              check_pts_duplicity(values$occ, values$env_data) == FALSE) |>
     try()
 
 

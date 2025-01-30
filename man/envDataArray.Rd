@@ -23,6 +23,6 @@ Get an array of environmental data from presence-absence points.
 occ <- mus_virtualis
 bio1_ts <- terra::unwrap(xsdm::cmcc_cm_bio1)
 bio12_ts <- terra::unwrap(xsdm::cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio12_ts)
+envData <- list(bio1 = bio1_ts)
 envDataArray(occ, envData)
 }

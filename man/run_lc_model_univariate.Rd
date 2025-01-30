@@ -33,4 +33,8 @@ if (FALSE) {
   )
 }
 }
+\seealso{
+Other models: 
+\code{\link{lc_univariate}()}
+}
 \concept{models}
