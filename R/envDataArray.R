@@ -7,9 +7,8 @@
 #' @export
 #'
 #' @examples
-#' occ <- mus_virtualis
-#' bio1_ts <- terra::unwrap(xsdm::cmcc_cm_bio1)
-#' bio12_ts <- terra::unwrap(xsdm::cmcc_cm_bio12)
+#' occ <- mus_virtualis[1:5, ]
+#' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 #' envData <- list(bio1 = bio1_ts)
 #' envDataArray(occ, envData)
 envDataArray <- function(occ, envData){
@@ -25,7 +24,6 @@ envDataArray <- function(occ, envData){
     envDataArray <- Map(f = as.matrix, envDataArray)
     envDataArray <- simplify2array(envDataArray)
   }
-
 
   return(envDataArray)
 }
