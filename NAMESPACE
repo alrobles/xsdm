@@ -2,6 +2,5 @@
 
 export(envDataArray)
 export(lc_univariate)
-export(run_lc_model_univariate)
 export(sample_points)
 export(xsdm)

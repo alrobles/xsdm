@@ -4,3 +4,6 @@
 ^data-raw$
 ^sandbox$
 ^.gitignore$
+^.github$
+^functions$
+^quarentine$

@@ -1,11 +1,13 @@
 #' @title Fit the Lewontin Cohen model.
-#' @export
 #' @family models
 #' @description Fit the Bernoulli Stan model and return posterior summaries.
 #' @return A data frame of posterior summaries.
+#'
 #' @param occ Numeric vector of presence absence observations (zeroes and ones).
 #' @param ts  Numeric array  of environmental variables. It has dimensions M (sites), N (time steps) and P (environmental variables)
+#' @param grainsize The grainsize for the reduce sum parallelization inerly handle by stan code. Ideally is the
 #' @param ... Named arguments to the `sample()` method of CmdStan model
+#' quotient between the number of observations and the number of cores.
 #'   objects: <https://mc-stan.org/cmdstanr/reference/model-method-sample.html>
 #' @examples
 #' if (instantiate::stan_cmdstan_exists()) {

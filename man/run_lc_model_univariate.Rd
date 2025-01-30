@@ -2,17 +2,20 @@
 % Please edit documentation in R/run_lc_model_univariate.R
 \name{run_lc_model_univariate}
 \alias{run_lc_model_univariate}
-\title{Fit the Bernoulli model.}
+\title{Fit the Lewontin Cohen model.}
 \usage{
-run_lc_model_univariate(occ, ts, ...)
+run_lc_model_univariate(occ, ts, grainsize = 10, ...)
 }
 \arguments{
 \item{occ}{Numeric vector of presence absence observations (zeroes and ones).}
 
 \item{ts}{Numeric array  of environmental variables. It has dimensions M (sites), N (time steps) and P (environmental variables)}
 
+\item{grainsize}{The grainsize for the reduce sum parallelization inerly handle by stan code. Ideally is the}
+
 \item{...}{Named arguments to the `sample()` method of CmdStan model
-objects: <https://mc-stan.org/cmdstanr/reference/model-method-sample.html>}
+quotient between the number of observations and the number of cores.
+  objects: <https://mc-stan.org/cmdstanr/reference/model-method-sample.html>}
 }
 \value{
 A data frame of posterior summaries.
@@ -21,7 +24,7 @@ A data frame of posterior summaries.
 Fit the Bernoulli Stan model and return posterior summaries.
 }
 \examples{
-if (FALSE) {
+if (instantiate::stan_cmdstan_exists()) {
  occ <- mus_virtualis
  bio1_ts <- terra::unwrap(xsdm::cmcc_cm_bio1)
  bio12_ts <- terra::unwrap(xsdm::cmcc_cm_bio12)
