@@ -1,11 +1,25 @@
 Package: xsdm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A demographic approach to species distribution model
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: c(
+    person("Emilio", "Berti", , "emilio.berti@idiv.de", role = c("aut"),
+           comment = c(ORCID = "0000-0001-9286-011X")),
+    person("Daniel C.", "Reuman", , "reuman@ku.edu", role = c("aut"),
+           comment = c(ORCID = "0000-0002-1407-8947")),
+    person("Angel Luis", "Robles Fernandez", , "a.l.robles.fernandez@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-4674-4270"))
+  )
+Description: XSDM is a tool that integrates concepts of 
+    stochastic demography into species distribution modelling.
+    Inferences, utilizing Bayesian methods based in Stan,
+    are made of aspects of the environmental niche of a species,
+    and those inferences can be used to project species
+    geographic range. Data requirements include species
+    detection records and spatiotemporal environmental data.
+    See <doi:10.1101/2024.10.30.621023> for a description of
+    the statistical and demographic models used.
+URL: <doi:10.1101/2024.10.30.621023>
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -19,3 +33,6 @@ Imports:
 Additional_repositories:
   https://mc-stan.org/r-packages/
 SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

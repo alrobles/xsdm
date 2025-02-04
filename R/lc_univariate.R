@@ -7,6 +7,7 @@
 #'
 #' @examples
 #' if (instantiate::stan_cmdstan_exists()) {
+#'   +
 #'   lc_univariate()
 #' }
 lc_univariate <- function() {

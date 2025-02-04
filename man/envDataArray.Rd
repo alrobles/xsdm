@@ -20,9 +20,8 @@ envDataArray
 Get an array of environmental data from presence-absence points.
 }
 \examples{
-occ <- mus_virtualis
-bio1_ts <- terra::unwrap(xsdm::cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(xsdm::cmcc_cm_bio12)
+occ <- mus_virtualis[1:5, ]
+bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 envData <- list(bio1 = bio1_ts)
 envDataArray(occ, envData)
 }

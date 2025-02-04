@@ -20,7 +20,7 @@ functions {
     real v;
 
     for(i in 1:M){                      // loop over locations
-    for(j in 1:N){                    // loop over time
+     for(j in 1:N){                    // loop over time
       u = ts_slice[i, j] - mu;
       if (u < 0) {
         v = ( u / sigl )^2;
