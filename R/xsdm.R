@@ -30,7 +30,7 @@ xsdm <- function(env_data = list(),
   xsdm_model <-  new_xsdm(env_data, occ, call = this.call)
   xsdm_model <-  validate_xsdm(xsdm_model)
   if(fit){
-    xsdm_model <-  fit_xsdm(xsdm_model)
+    xsdm_model <-  fit_xsdm(xsdm_model, ...)
   }
 
   return(xsdm_model)
