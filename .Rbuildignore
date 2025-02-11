@@ -3,3 +3,10 @@
 ^LICENSE\.md$
 ^data-raw$
 ^sandbox$
+^.gitignore$
+^.github$
+^functions$
+^quarentine$
+^README\.Rmd$
+^CRAN-SUBMISSION$
+^cran-comments\.md$

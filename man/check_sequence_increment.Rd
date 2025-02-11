@@ -18,9 +18,3 @@ returns FALSE. Otherwise returns the increment step
 Check sequence. Function to check if a vector is
 a sequence with same increment
 }
-\examples{
-\dontrun{
-check_sequence_increment(1:5)
-check_sequence_increment(c(1, 4, 6, 7))
-}
-}

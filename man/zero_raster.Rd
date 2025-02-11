@@ -17,11 +17,3 @@ the environmetal data set provided as list form.
 \description{
 Title
 }
-\examples{
-\dontrun{
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-zero_raster(envData)
-}
-}

@@ -1,6 +1,4 @@
-//DAN: Adding notes for my own clarification. Eventually these are to
-//be deleted, possibly inspiring changes to comments to clarify for the
-//next person.
+//Partial sum function.
 
 functions {
   real partial_sum_lpmf(array[] int slice_n_occ,
@@ -22,7 +20,7 @@ functions {
     real v;
 
     for(i in 1:M){                      // loop over locations
-    for(j in 1:N){                    // loop over time
+     for(j in 1:N){                    // loop over time
       u = ts_slice[i, j] - mu;
       if (u < 0) {
         v = ( u / sigl )^2;
@@ -36,13 +34,43 @@ functions {
 
     return bernoulli_lpmf(slice_n_occ | pd * inv_logit(loglam - c));
   }
+
+  vector growing_function(matrix ts,
+                          int N,
+                          int M,
+                          real mu,
+                          real sigl,
+                          real sigr,
+                          real pd,
+                          real c) {
+
+
+    vector[N] response;
+    vector[M] loglam;
+    real u;
+    real v;
+
+    for(i in 1:M){                      // loop over locations
+     for(j in 1:N){                    // loop over time
+      u = ts[i, j] - mu;
+      if (u < 0) {
+        v = ( u / sigl )^2;
+      } else {
+        v = ( u / sigr )^2;
+      }
+      response[j] = -0.5 * v;
+    }
+    loglam[i] = mean(response);
+  }
+    return pd * inv_logit(loglam - c);
+  }
+
 }
 
 data {
-  int M; // observations //DAN: I think this is number of locations, some are
-                         //observations, some are going to be pseudo-absences
+  int M; // observations
   int N; // timeseries length
-  array[M] int<lower=0,upper=1> occ; //DAN: Binary presence/pseudo-absence.
+  array[M] int<lower=0,upper=1> occ; //Binary presence/pseudo-absence.
   matrix[M, N] ts;
   int<lower=1> grainsize;
 }

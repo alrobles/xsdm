@@ -17,9 +17,3 @@ latitude
 \description{
 Check points data frame
 }
-\examples{
-\dontrun{
-pts <- mus_virtualis
-check_pts_presence(pts)
-}
-}
