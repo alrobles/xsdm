@@ -30,7 +30,9 @@ fit_xsdm <- function(xsdm_object, ...){
   }
 
   stan_model <- model$sample(stan_data, ...)
+  values$stan_model <- stan_model
+  xsdm <- new_xsdm(values)
 
-  return(stan_model)
+  return(xsdm)
 }
 
