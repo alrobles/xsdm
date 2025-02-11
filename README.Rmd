@@ -18,15 +18,17 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of xsdm is to ...
+Xsdm: A demographic approach to species distribution model
+
+
 
 ## Installation
 
-You can install the development version of xsdm from [GitHub](https://github.com/) with:
+You can install the development version of xsdm from [GitHub](https://github.com/emilio-berti/xsdm/tree/develpackage) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("emilio-berti/xsdm")
+pak::pak("emilio-berti/xsdm/tree/develpackage")
 ```
 
 ## Example

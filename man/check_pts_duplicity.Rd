@@ -24,12 +24,3 @@ Check the duplicity of points. Thecks if there are
 at least two or more points in a same cell for a
 given raster set.
 }
-\examples{
-\dontrun{
-occ <- mus_virtualis
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-check_pts_duplicity(occ, envData)
-}
-}

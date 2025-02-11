@@ -18,14 +18,3 @@ the objects are different returns FALSE
 \description{
 Check if two objects are the same
 }
-\examples{
-\dontrun{
-idem("a", "b")
-idem("x", "x")
-# combined con Reduce can be applied in a list recursively
-test <- list("a", "a", "a")
-Reduce(idem, test)
-#' test <- list("a", "a", "A")
-Reduce(idem, test)
-}
-}

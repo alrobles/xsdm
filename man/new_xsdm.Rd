@@ -4,7 +4,12 @@
 \alias{new_xsdm}
 \title{Constructor function for the class xsdm}
 \usage{
-new_xsdm(env_data = list(), occ = data.frame(), call = character())
+new_xsdm(
+  env_data = list(),
+  occ = data.frame(),
+  stan_model = NULL,
+  call = character()
+)
 }
 \arguments{
 \item{env_data}{A (prefered named) list with environmental
@@ -12,23 +17,10 @@ raster time series.}
 
 \item{occ}{A data.frame}
 
+\item{stan_model}{A stan fitted object slot. Default is NULL}
+
 \item{call}{Call this function}
-}
-\value{
-an object of class xsdm
 }
 \description{
 Constructor function for the class xsdm
-}
-\examples{
-\dontrun{
-# example code
-# Bioclimatic variable time series
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-#Virtual species presence/absence points
-pts <- mus_virtualis
-new_xsdm(envData, occ = pts)
-}
 }

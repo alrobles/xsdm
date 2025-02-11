@@ -18,13 +18,3 @@ returns FALSE
 Check environmental data list coordinate reference system
 Check if all elements in the env_data list have equal coords
 }
-\examples{
-\dontrun{
-# Bioclimatic variable time series
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio1_ts <- terra::project(bio1_ts, "EPSG:2169")
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-check_envdata_crs(envData)
-}
-}

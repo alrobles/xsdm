@@ -19,9 +19,3 @@ latitude
 Check environmental data list coordinate reference system
 Check if all elements in the env_data list have equal coords
 }
-\examples{
-\dontrun{
-pts <- mus_virtualis
-check_pts_haslonglat(pts)
-}
-}

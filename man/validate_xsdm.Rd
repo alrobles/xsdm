@@ -15,14 +15,3 @@ A validated xsdm_object
 \description{
 validate xsdm_object constructed via xsdm_plus function
 }
-\examples{
-\dontrun{
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-pts <- mus_virtualis
-pts <- rbind(pts, pts)
-
-xsdm:::new_xsdm(envData, occ = pts) |> xsdm:::validate_xsdm()
-}
-}

@@ -9,14 +9,6 @@
 #'
 #' @return Logical It is true if there is at least
 #' two (or more) points in the same cell
-#' @examples
-#' \dontrun{
-#' occ <- mus_virtualis
-#' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-#' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-#' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-#' check_pts_duplicity(occ, envData)
-#'}
 check_pts_duplicity <- function(occ, envData){
   pts <- terra::vect(occ, geom = c("longitude", "latitude"))
   r <- zero_raster(envData)

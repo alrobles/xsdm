@@ -18,18 +18,3 @@ returns FALSE
 Check environmental data list coordinate reference system
 Check if all elements in the env_data list have equal coords
 }
-\examples{
-\dontrun{
-# Bioclimatic variable time series
-data(cmcc_cm_bio1)
-data(cmcc_cm_bio12)
-data(cmcc_cm_pr)
-bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-pr <- terra::unwrap(cmcc_cm_pr)
-pr <- pr[[1:20]]
-bio12_ts <- bio12_ts[[1:29]]
-envData <- list(bio1 = bio1_ts, bio_12 = bio12_ts)
-xsdmTest:::check_envdata_timestep_consistency(envData)
-}
-}

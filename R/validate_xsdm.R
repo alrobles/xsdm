@@ -3,17 +3,6 @@
 #' @param xsdm_object An xsdm object constructed with new_xsdm function
 #'
 #' @return A validated xsdm_object
-#' @examples
-#' \dontrun{
-#' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-#' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
-#' envData <- list(bio1 = bio1_ts, bio12 = bio1_ts)
-#' pts <- mus_virtualis
-#' pts <- rbind(pts, pts)
-#'
-#' xsdm:::new_xsdm(envData, occ = pts) |> xsdm:::validate_xsdm()
-#' }
-
 validate_xsdm <- function(xsdm_object){
   values  <- unclass(xsdm_object)
   stopifnot(class(values$env_data) == "list")
@@ -56,12 +45,10 @@ validate_xsdm <- function(xsdm_object){
     try()
 
   stopifnot("The presence column in ocurrence data.frame has NA entries" =
-              check_pts_presence_na(values$occ) == TRUE  ) |>
-    try()
+              check_pts_presence_na(values$occ) == TRUE  )
 
   stopifnot("The point points are duplicated. Check clean_data" =
-              check_pts_duplicity(values$occ, values$env_data) == FALSE) |>
-    try()
+              check_pts_duplicity(values$occ, values$env_data) == FALSE)
 
 
   xsdm_object

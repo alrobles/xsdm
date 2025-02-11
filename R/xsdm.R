@@ -2,7 +2,8 @@
 #'
 #' @param env_data A (prefered named) list with environmental
 #' raster time series.
-#' @param occ A data.frame
+#' @param occ A data.frame with name of species, longitude, latitude and occurrence column.
+#' @param fit Logical. Default TRUE.
 #' @param ... other arguments
 #' @return an object of class xsdm
 #' @export
@@ -13,9 +14,13 @@
 #' envData <- list(bio1 = bio1_ts)
 #' #Virtual species presence/absence points
 #' pts <- mus_virtualis
-#' xsdm(envData, occ = pts)
+#' xsdm(envData, occ = pts, fit = FALSE)
+#' if (instantiate::stan_cmdstan_exists()) {
+#'   xsdm(envData, occ = pts, fit = TRUE)
+#' }
 xsdm <- function(env_data = list(),
                  occ = data.frame(),
+                 fit = TRUE,
                  ...){
 
 
@@ -24,13 +29,9 @@ xsdm <- function(env_data = list(),
 
   xsdm_model <-  new_xsdm(env_data, occ, call = this.call)
   xsdm_model <-  validate_xsdm(xsdm_model)
-  #xsdm_model <-  fit_xsdm(xsdm_model)
-
-  # pts <- terra::vect(occ, geom = c("longitude", "latitude"))
-  # stopifnot("The points has duplicity in the environmental raster" =
-  #             check_pts_duplicity(pts, env_data) == TRUE) |>
-  #   try()
+  if(fit){
+    xsdm_model <-  fit_xsdm(xsdm_model)
+  }
 
   return(xsdm_model)
-
 }

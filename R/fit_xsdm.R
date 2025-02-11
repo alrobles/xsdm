@@ -30,5 +30,7 @@ fit_xsdm <- function(xsdm_object, ...){
   }
 
   stan_model <- model$sample(stan_data, ...)
+
   return(stan_model)
 }
+

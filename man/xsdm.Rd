@@ -4,13 +4,15 @@
 \alias{xsdm}
 \title{Constructor function for the class xsdm}
 \usage{
-xsdm(env_data = list(), occ = data.frame(), ...)
+xsdm(env_data = list(), occ = data.frame(), fit = TRUE, ...)
 }
 \arguments{
 \item{env_data}{A (prefered named) list with environmental
 raster time series.}
 
-\item{occ}{A data.frame}
+\item{occ}{A data.frame with name of species, longitude, latitude and occurrence column.}
+
+\item{fit}{Logical. Default TRUE.}
 
 \item{...}{other arguments}
 }
@@ -26,5 +28,8 @@ bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 envData <- list(bio1 = bio1_ts)
 #Virtual species presence/absence points
 pts <- mus_virtualis
-xsdm(envData, occ = pts)
+xsdm(envData, occ = pts, fit = FALSE)
+if (instantiate::stan_cmdstan_exists()) {
+  xsdm(envData, occ = pts, fit = TRUE)
+}
 }
