@@ -17,7 +17,7 @@ Description: Integrates concepts of stochastic demography into species distribut
     detection records and spatiotemporal environmental data in 
     Berti et al. (2024, <doi:10.1101/2024.10.30.621023>) for a description of
     the statistical and demographic models used.
-URL: <https://www.biorxiv.org/content/10.1101/2024.10.30.621023v1>
+URL: https://alrobles.github.io/xsdm/
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

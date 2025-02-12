@@ -10,3 +10,7 @@
 ^README\.Rmd$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
