@@ -17,7 +17,7 @@ Description: Integrates concepts of stochastic demography into species distribut
     detection records and spatiotemporal environmental data in 
     Berti et al. (2024, <doi:10.1101/2024.10.30.621023>) for a description of
     the statistical and demographic models used.
-URL: <doi:10.1101/2024.10.30.621023>
+URL: <https://www.biorxiv.org/content/10.1101/2024.10.30.621023>
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -27,7 +27,10 @@ RoxygenNote: 7.3.2
 Imports: 
     terra,
     utils,
-    instantiate
+    instantiate,
+    Rcpp (>= 1.0.13),
+    RcppParallel (>= 5.1.9)
+LinkingTo: Rcpp, RcppParallel
 SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Suggests: 
     testthat (>= 3.0.0)

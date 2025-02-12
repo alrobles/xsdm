@@ -12,7 +12,10 @@ __  _____  __| |_ __ ___
  >  <\\__ \\ (_| | | | | | |
 /_/\\_\\___/\\__,_|_| |_| |_|    version ",
     utils::packageVersion("xsdm")),
-    "\nType 'citation(\"xsdm\")' for citing this R package in publications.")
+    "\nType 'citation(\"xsdm\")' for citing this R package in publications.\n",
+    "\nThis package depends on cmdstanr that is not in CRAN\n"
+    )
+
   return(msg)
 }
 
@@ -26,4 +29,8 @@ __  _____  __| |_ __ ___
     msg[1] <- paste("Package 'xsdm' version", utils::packageVersion("xsdm"))
   packageStartupMessage(msg)
   invisible()
+
+}
+.onUnload <- function(libpath) {
+  library.dynam.unload("xsdm", libpath)
 }
