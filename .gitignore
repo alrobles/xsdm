@@ -8,3 +8,7 @@ src/stan/**/*.exe
 src/stan/**/*.EXE
 functions
 quarentine
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
