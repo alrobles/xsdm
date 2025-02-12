@@ -1,7 +1,7 @@
 Package: xsdm
 Type: Package
 Title: A Demographic Approach to Species Distribution Model
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Emilio", "Berti", , "emilio.berti@idiv.de", role = c("aut"),
            comment = c(ORCID = "0000-0001-9286-011X")),
