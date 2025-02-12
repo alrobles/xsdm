@@ -2,6 +2,8 @@
 
 export(envDataArray)
 export(lc_univariate)
+export(ltsg)
+export(prob_detec)
 export(sample_points)
 export(xsdm)
 import(Rcpp)

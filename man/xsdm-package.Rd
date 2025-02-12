@@ -10,7 +10,7 @@ Integrates concepts of stochastic demography into species distribution modelling
 \seealso{
 Useful links:
 \itemize{
-  \item \url{<https://www.biorxiv.org/content/10.1101/2024.10.30.621023>}
+  \item \url{<https://www.biorxiv.org/content/10.1101/2024.10.30.621023v1>}
 }
 
 }

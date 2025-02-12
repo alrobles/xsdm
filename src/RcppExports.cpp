@@ -10,6 +10,30 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// inverse_logit
+NumericMatrix inverse_logit(NumericMatrix input, double param1, double param2);
+RcppExport SEXP _xsdm_inverse_logit(SEXP inputSEXP, SEXP param1SEXP, SEXP param2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type input(inputSEXP);
+    Rcpp::traits::input_parameter< double >::type param1(param1SEXP);
+    Rcpp::traits::input_parameter< double >::type param2(param2SEXP);
+    rcpp_result_gen = Rcpp::wrap(inverse_logit(input, param1, param2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// meanRow
+NumericMatrix meanRow(NumericMatrix mat);
+RcppExport SEXP _xsdm_meanRow(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(meanRow(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // response
 NumericMatrix response(NumericMatrix x, double param1, double param2, double param3);
 RcppExport SEXP _xsdm_response(SEXP xSEXP, SEXP param1SEXP, SEXP param2SEXP, SEXP param3SEXP) {
@@ -26,6 +50,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_xsdm_inverse_logit", (DL_FUNC) &_xsdm_inverse_logit, 3},
+    {"_xsdm_meanRow", (DL_FUNC) &_xsdm_meanRow, 1},
     {"_xsdm_response", (DL_FUNC) &_xsdm_response, 4},
     {NULL, NULL, 0}
 };
