@@ -4,10 +4,13 @@
 \alias{fit_xsdm}
 \title{Fit an xsdm model}
 \usage{
-fit_xsdm(xsdm_object, ...)
+fit_xsdm(xsdm_object, optim = FALSE, ...)
 }
 \arguments{
 \item{xsdm_object}{an xsdm object created with constuctor and validated}
+
+\item{optim}{Default is false. Calculate the mle estimation (default) or
+Maximum a posteriori estimation (need to pass jacobian = TRUE  argument)}
 
 \item{...}{argument passed to stan model sampling}
 }
