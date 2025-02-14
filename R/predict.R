@@ -18,7 +18,7 @@
 predict.xsdm <- function(xsdm_object, index = 1){
   values  <- unclass(xsdm_object)
   meta <- values$stan_model$metadata()
-  match_lp <-  grep(pattern = "lp", x = meta$model_params)
+  match_lp <-  grep(pattern = "^lp", x = meta$model_params)
   params <- meta$model_params[-match_lp]
   df <- values$stan_model$draws(format = "df", variables = params)
 
