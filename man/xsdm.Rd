@@ -12,7 +12,11 @@ raster time series.}
 
 \item{occ}{A data.frame with name of species, longitude, latitude and occurrence column.}
 
-\item{fit}{Logical. Default TRUE.}
+\item{fit}{Logical or string. Default TRUE. Define the fittig
+method for xsdm. Default method is sampling from the porsterior
+using MCMC. Other possible methods are mle (Maximum likelihood estimation),
+map (Maximum a posteriori estimation), mle.laplace (Laplace method),
+map.laplace.}
 
 \item{...}{other arguments}
 }

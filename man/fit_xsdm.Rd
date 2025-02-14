@@ -4,13 +4,19 @@
 \alias{fit_xsdm}
 \title{Fit an xsdm model}
 \usage{
-fit_xsdm(xsdm_object, optim = FALSE, ...)
+fit_xsdm(xsdm_object, fit = NULL, recompile = FALSE, ...)
 }
 \arguments{
 \item{xsdm_object}{an xsdm object created with constuctor and validated}
 
-\item{optim}{Default is false. Calculate the mle estimation (default) or
-Maximum a posteriori estimation (need to pass jacobian = TRUE  argument)}
+\item{fit}{String. Default is TRUE. Calculate parameters either by sampling,
+optimization or Laplace methods. Calculate the mle estimation (default) or
+Maximum a posteriori estimation (need to pass jacobian = TRUE  argument).
+Possible parameters are c("mle", "map", "mle.laplace", "map.laplace")}
+
+\item{recompile}{Default FALSE. If TRUE, recompile the Lewontin-Cohen model
+to use features not availiable out of the box. It is needed
+to use laplace and optim methods.}
 
 \item{...}{argument passed to stan model sampling}
 }

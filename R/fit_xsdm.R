@@ -1,13 +1,18 @@
 #' Fit an xsdm model
 #'
 #' @param xsdm_object an xsdm object created with constuctor and validated
-#' @param optim Default is false. Calculate the mle estimation (default) or
-#' Maximum a posteriori estimation (need to pass jacobian = TRUE  argument)
+#' @param fit String. Default is TRUE. Calculate parameters either by sampling,
+#' optimization or Laplace methods. Calculate the mle estimation (default) or
+#' Maximum a posteriori estimation (need to pass jacobian = TRUE  argument).
+#' Possible parameters are c("mle", "map", "mle.laplace", "map.laplace")
+#' @param recompile Default FALSE. If TRUE, recompile the Lewontin-Cohen model
+#' to use features not availiable out of the box. It is needed
+#' to use laplace and optim methods.
 #' @param ... argument passed to stan model sampling
 #'
 #' @return a fitted xsdm object
 #'
-fit_xsdm <- function(xsdm_object, optim = FALSE, ...){
+fit_xsdm <- function(xsdm_object, fit = NULL, recompile = FALSE, ...){
   values  <- unclass(xsdm_object)
   ts <- envDataArray(occ = values$occ,
                    values$env_data)
@@ -31,8 +36,21 @@ fit_xsdm <- function(xsdm_object, optim = FALSE, ...){
     )
   }
 
-  if(optim){
-    stan_model <- model$optimize(stan_data, ...)
+  if(recompile){
+    model$compile(force_recompile = TRUE)
+  }
+
+
+  if(fit == "mle"){
+    stan_model <- model$optimize(stan_data, jacobian = FALSE, ...)
+  } else if(fit == "map") {
+    stan_model <- model$optimize(stan_data, jacobian = TRUE, ...)
+  } else if(fit == "mle.laplace"){
+    fit_mode   <- model$optimize(stan_data, jacobian = FALSE, ...)
+    stan_model <- model$laplace(data = stan_data, mode = fit_mode, jacobian = FALSE, ...)
+  } else if(fit == "map.laplace"){
+    fit_mode   <- model$optimize(stan_data, jacobian = TRUE, ...)
+    stan_model <- model$laplace(data = stan_data, mode = fit_mode, ...)
   } else{
     stan_model <- model$sample(stan_data, ...)
   }

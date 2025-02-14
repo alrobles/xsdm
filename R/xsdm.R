@@ -3,7 +3,11 @@
 #' @param env_data A (prefered named) list with environmental
 #' raster time series.
 #' @param occ A data.frame with name of species, longitude, latitude and occurrence column.
-#' @param fit Logical. Default TRUE.
+#' @param fit Logical or string. Default TRUE. Define the fittig
+#' method for xsdm. Default method is sampling from the porsterior
+#' using MCMC. Other possible methods are mle (Maximum likelihood estimation),
+#' map (Maximum a posteriori estimation), mle.laplace (Laplace method),
+#' map.laplace.
 #' @param ... other arguments
 #' @return an object of class xsdm
 #' @export
@@ -29,8 +33,8 @@ xsdm <- function(env_data = list(),
 
   xsdm_model <-  new_xsdm(env_data, occ, call = this.call)
   xsdm_model <-  validate_xsdm(xsdm_model)
-  if(fit){
-    xsdm_model <-  fit_xsdm(xsdm_model, ...)
+  if(!fit == FALSE){
+    xsdm_model <-  fit_xsdm(xsdm_model, fit = fit,...)
   }
 
   return(xsdm_model)
