@@ -37,7 +37,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_xsdm</span><span class="op">(</span><span class="va">xsdm_object</span>, fit <span class="op">=</span> <span class="cn">NULL</span>, recompile <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_xsdm</span><span class="op">(</span><span class="va">xsdm_object</span>, fit <span class="op">=</span> <span class="cn">NULL</span>, recompile <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">compile_standalone</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,6 +59,11 @@ Possible parameters are c("mle", "map", "mle.laplace", "map.laplace")</p></dd>
 <dd><p>Default FALSE. If TRUE, recompile the Lewontin-Cohen model
 to use features not availiable out of the box. It is needed
 to use laplace and optim methods.</p></dd>
+
+
+<dt id="arg-compile-standalone">compile_standalone<a class="anchor" aria-label="anchor" href="#arg-compile-standalone"></a></dt>
+<dd><p>Default TRUE. It is useful to export
+loglik functions</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

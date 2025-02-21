@@ -3,6 +3,7 @@
 <url><loc>https://alrobles.github.io/xsdm/LICENSE.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/authors.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/index.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/bernoulli_lpmf.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_crs.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_ext.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_hastime.html</loc></url>
@@ -20,9 +21,11 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/cmcc_cm_bio12.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/envDataArray.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/fit_xsdm.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/get_log_prob.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/idem.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/index.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/lc_univariate.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/loo.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/ltsg.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/mus_virtualis.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/new_xsdm.html</loc></url>
@@ -31,6 +34,7 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/run_lc_model_univariate.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/sample_points.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/validate_xsdm.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/vsp.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/warnifnot.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/xsdm-package.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/xsdm.html</loc></url>
