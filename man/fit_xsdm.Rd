@@ -4,7 +4,13 @@
 \alias{fit_xsdm}
 \title{Fit an xsdm model}
 \usage{
-fit_xsdm(xsdm_object, fit = NULL, recompile = FALSE, compile_standalone, ...)
+fit_xsdm(
+  xsdm_object,
+  fit = NULL,
+  recompile = FALSE,
+  compile_standalone = FALSE,
+  ...
+)
 }
 \arguments{
 \item{xsdm_object}{an xsdm object created with constuctor and validated}
