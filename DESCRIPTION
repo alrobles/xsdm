@@ -29,10 +29,12 @@ Imports:
     utils,
     instantiate,
     Rcpp (>= 1.0.13),
-    RcppParallel (>= 5.1.9)
+    RcppParallel (>= 5.1.9),
+    stats
 LinkingTo: Rcpp, RcppParallel
-SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan),
-    GNUmake
+SystemRequirements: 
+    GNUmake,
+    CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

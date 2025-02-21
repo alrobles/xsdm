@@ -4,7 +4,7 @@
 \alias{fit_xsdm}
 \title{Fit an xsdm model}
 \usage{
-fit_xsdm(xsdm_object, fit = NULL, recompile = FALSE, ...)
+fit_xsdm(xsdm_object, fit = NULL, recompile = FALSE, compile_standalone, ...)
 }
 \arguments{
 \item{xsdm_object}{an xsdm object created with constuctor and validated}
@@ -17,6 +17,9 @@ Possible parameters are c("mle", "map", "mle.laplace", "map.laplace")}
 \item{recompile}{Default FALSE. If TRUE, recompile the Lewontin-Cohen model
 to use features not availiable out of the box. It is needed
 to use laplace and optim methods.}
+
+\item{compile_standalone}{Default TRUE. It is useful to export
+loglik functions}
 
 \item{...}{argument passed to stan model sampling}
 }

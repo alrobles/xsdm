@@ -22,6 +22,8 @@ Title
 bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 envData <- list(bio1 = bio1_ts)
 pts <- mus_virtualis
-mod <- xsdm(envData, occ = pts, fit = TRUE,  optim = TRUE )
+if (instantiate::stan_cmdstan_exists()) {
+mod <- xsdm(envData, occ = pts, fit = "map" )
 predict(mod)
+}
 }

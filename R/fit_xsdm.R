@@ -8,11 +8,13 @@
 #' @param recompile Default FALSE. If TRUE, recompile the Lewontin-Cohen model
 #' to use features not availiable out of the box. It is needed
 #' to use laplace and optim methods.
+#' @param compile_standalone Default TRUE. It is useful to export
+#' loglik functions
 #' @param ... argument passed to stan model sampling
 #'
 #' @return a fitted xsdm object
 #'
-fit_xsdm <- function(xsdm_object, fit = NULL, recompile = FALSE, ...){
+fit_xsdm <- function(xsdm_object, fit = NULL, recompile = FALSE, compile_standalone = FALSE, ...){
   values  <- unclass(xsdm_object)
   ts <- envDataArray(occ = values$occ,
                    values$env_data)
@@ -37,7 +39,11 @@ fit_xsdm <- function(xsdm_object, fit = NULL, recompile = FALSE, ...){
   }
 
   if(recompile){
-    model$compile(force_recompile = TRUE)
+    if( compile_standalone){
+      model$compile(force_recompile = TRUE, compile_standalone = TRUE)
+    }else{
+      model$compile(force_recompile = TRUE)
+    }
   }
 
 

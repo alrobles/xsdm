@@ -23,6 +23,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// bernoulli_lpmf
+NumericVector bernoulli_lpmf(NumericVector x, NumericVector y);
+RcppExport SEXP _xsdm_bernoulli_lpmf(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(bernoulli_lpmf(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // meanRow
 NumericMatrix meanRow(NumericMatrix mat);
 RcppExport SEXP _xsdm_meanRow(SEXP matSEXP) {
@@ -31,6 +43,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
     rcpp_result_gen = Rcpp::wrap(meanRow(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// parallelVectorSum
+double parallelVectorSum(NumericVector x);
+RcppExport SEXP _xsdm_parallelVectorSum(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(parallelVectorSum(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -51,7 +74,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_xsdm_inverse_logit", (DL_FUNC) &_xsdm_inverse_logit, 3},
+    {"_xsdm_bernoulli_lpmf", (DL_FUNC) &_xsdm_bernoulli_lpmf, 2},
     {"_xsdm_meanRow", (DL_FUNC) &_xsdm_meanRow, 1},
+    {"_xsdm_parallelVectorSum", (DL_FUNC) &_xsdm_parallelVectorSum, 1},
     {"_xsdm_response", (DL_FUNC) &_xsdm_response, 4},
     {NULL, NULL, 0}
 };

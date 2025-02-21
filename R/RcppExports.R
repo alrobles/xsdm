@@ -5,8 +5,16 @@
     .Call(`_xsdm_inverse_logit`, input, param1, param2)
 }
 
+.bernoulli_lpmf <- function(x, y) {
+    .Call(`_xsdm_bernoulli_lpmf`, x, y)
+}
+
 .meanRow <- function(mat) {
     .Call(`_xsdm_meanRow`, mat)
+}
+
+.parallelVectorSum <- function(x) {
+    .Call(`_xsdm_parallelVectorSum`, x)
 }
 
 .response <- function(x, param1, param2, param3) {
