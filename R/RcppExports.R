@@ -21,3 +21,7 @@
     .Call(`_xsdm_response`, x, param1, param2, param3)
 }
 
+.response_multi <- function(x, sigl, sigr) {
+    .Call(`_xsdm_response_multi`, x, sigl, sigr)
+}
+

@@ -21,6 +21,7 @@ if (instantiate::stan_cmdstan_exists()) {
 }
 \seealso{
 Other models: 
+\code{\link{lc_multivariate}()},
 \code{\link{run_lc_model_univariate}()}
 }
 \concept{models}

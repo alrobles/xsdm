@@ -4,7 +4,7 @@
 \alias{prob_detec}
 \title{Probability of detection}
 \usage{
-prob_detec(env, mu, sigl, sigr, c, pd)
+prob_detec(env, mu, sigl, sigr, c, pd, L = NULL)
 }
 \arguments{
 \item{env}{Environmental time serires matrix. Rows are sites and
@@ -19,6 +19,8 @@ columns are yearly time steps.}
 \item{c}{Numeric parameter. It controls the growth limit.}
 
 \item{pd}{Numeric parameter. It controls the maximum probability}
+
+\item{L}{matrix parameter. Default is NULL (i. e. univariate Lewontin Cohen model)}
 }
 \value{
 A numeric value between 0 and 1 with the probability of detection

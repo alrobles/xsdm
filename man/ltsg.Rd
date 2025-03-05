@@ -5,7 +5,7 @@
 \title{Univariate long term stochastic growth function for a
 Lewontin Cohen demographic environmental model}
 \usage{
-ltsg(env, mu, sigl, sigr)
+ltsg(env, mu, sigl, sigr, L = NULL)
 }
 \arguments{
 \item{env}{Matrix Environmental time series (columns) per sites (rows)}
@@ -15,6 +15,8 @@ ltsg(env, mu, sigl, sigr)
 \item{sigl}{numeric parameter.}
 
 \item{sigr}{numeric parameter}
+
+\item{L}{matrix parameter}
 }
 \value{
 A vector with long term stochastic growht values calculated in each site

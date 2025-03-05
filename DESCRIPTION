@@ -33,7 +33,7 @@ Imports:
     stats
 LinkingTo: Rcpp, RcppParallel
 SystemRequirements: 
-    GNUmake,
+    GNU make,
     CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Suggests: 
     testthat (>= 3.0.0)

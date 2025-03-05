@@ -1,6 +1,6 @@
 #' Virtual species
 #'
-#' @param xsdm_object An xsdm object
+#' @param env A list with environmental time series raster object
 #' @param param.list A list of parameters
 #'
 #' @return \code{NULL}
@@ -11,35 +11,26 @@
 #' if (instantiate::stan_cmdstan_exists()) {
 #' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 #' envData <- list(bio1 = bio1_ts)
-#' pts <- mus_virtualis
-#' mod <- xsdm(envData, occ = pts, fit = FALSE)
 #' pars <- list(mu = 4.38, sigl = 1.24, sigr = 1.05, c = -8.39, pd = 0.61)
-#' vsp(mod, param.list =  pars) |> terra::plot()
+#' vsp(envData, param.list =  pars) |> terra::plot()
 #' }
-vsp <- function(xsdm_object, param.list = NULL){
-  UseMethod("vsp")
-}
-
-#' @return \code{NULL}
-#'
-#' @rdname vsp
-#' @method vsp xsdm
-#' @export
-vsp.xsdm = function(xsdm_object, param.list = NULL) {
-  values  <- unclass(xsdm_object)
+vsp.xsdm = function(env, param.list = NULL) {
+  #values  <- unclass(xsdm_object)
 
   if(!is.null(param.list)){
-    checkList <- identical(names(param.list), c("mu", "sigl", "sigr", "c", "pd"))
+    checkList <- identical(names(param.list), c("mu", "sigl", "sigr", "c", "pd", "L"))
     if(!checkList){
       stop("Check the parameter names")
     }
   }
 
-  if(length(values$env_data) == 1){
+  if(length(env_data) == 1){
     envM <- as.matrix(values$env_data[[1]])
+
     #Assign the parameters given the environment
     #Later this will be done with another control function
     # to pass arguments to priors in LC model
+
     if(is.null(param.list)){
       param.list = list(mu = mean(envM),
                         sigl = stats::sd(envM),

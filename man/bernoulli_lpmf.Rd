@@ -21,6 +21,7 @@ Numeric. Bernoulli log probability mass function
 Probability mass fucntion
 }
 \examples{
-prob <- prob_detec(env = matrix(c(-1, 0, -0.1, 0.9), ncol = 1), mu =  0, sigl =  1, sigr =  0.9, c =  -0.8, pd = 0.9)
+prob <- prob_detec(env = matrix(c(-1, 0, -0.1, 0.9), ncol = 1),
+ mu =  0, sigl =  1, sigr =  0.9, c =  -0.8, pd = 0.9)
 bernoulli_lpmf(prob, occ = c(0, 1, 1, 0))
 }

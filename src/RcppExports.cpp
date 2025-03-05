@@ -71,6 +71,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// response_multi
+NumericMatrix response_multi(NumericMatrix x, NumericVector sigl, NumericVector sigr);
+RcppExport SEXP _xsdm_response_multi(SEXP xSEXP, SEXP siglSEXP, SEXP sigrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sigl(siglSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sigr(sigrSEXP);
+    rcpp_result_gen = Rcpp::wrap(response_multi(x, sigl, sigr));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_xsdm_inverse_logit", (DL_FUNC) &_xsdm_inverse_logit, 3},
@@ -78,6 +91,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_xsdm_meanRow", (DL_FUNC) &_xsdm_meanRow, 1},
     {"_xsdm_parallelVectorSum", (DL_FUNC) &_xsdm_parallelVectorSum, 1},
     {"_xsdm_response", (DL_FUNC) &_xsdm_response, 4},
+    {"_xsdm_response_multi", (DL_FUNC) &_xsdm_response_multi, 3},
     {NULL, NULL, 0}
 };
 

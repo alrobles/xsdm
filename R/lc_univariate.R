@@ -14,6 +14,5 @@ lc_univariate <- function() {
     name = "lewontin_cohen_univariate",
     package = "xsdm"
   )
-
   return(model)
 }
