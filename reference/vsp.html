@@ -37,28 +37,27 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vsp</span><span class="op">(</span><span class="va">xsdm_object</span>, param.list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'xsdm'</span></span>
-<span><span class="fu">vsp</span><span class="op">(</span><span class="va">xsdm_object</span>, param.list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vsp</span><span class="op">(</span><span class="va">env_data</span>, param.list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-xsdm-object">xsdm_object<a class="anchor" aria-label="anchor" href="#arg-xsdm-object"></a></dt>
-<dd><p>An xsdm object</p></dd>
+<dl><dt id="arg-env-data">env_data<a class="anchor" aria-label="anchor" href="#arg-env-data"></a></dt>
+<dd><p>A list with environmental time series raster object</p></dd>
 
 
 <dt id="arg-param-list">param.list<a class="anchor" aria-label="anchor" href="#arg-param-list"></a></dt>
-<dd><p>A list of parameters</p></dd>
+<dd><p>A list of parameters. Could be null for
+an unidimensional model (i. e. one environmental variable in the
+env list)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>NULL</code></p>
-<p><code>NULL</code></p>
+    <p>A raster with the probability of detectio of the
+virtual species</p>
     </div>
 
     <div class="section level2">
@@ -66,10 +65,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">instantiate</span><span class="fu">::</span><span class="fu"><a href="https://wlandau.github.io/instantiate/reference/stan_cmdstan_exists.html" class="external-link">stan_cmdstan_exists</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">bio1_ts</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">unwrap</a></span><span class="op">(</span><span class="va">cmcc_cm_bio1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">envData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bio1 <span class="op">=</span> <span class="va">bio1_ts</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="va">mus_virtualis</span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="xsdm.html">xsdm</a></span><span class="op">(</span><span class="va">envData</span>, occ <span class="op">=</span> <span class="va">pts</span>, fit <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">4.38</span>, sigl <span class="op">=</span> <span class="fl">1.24</span>, sigr <span class="op">=</span> <span class="fl">1.05</span>, c <span class="op">=</span> <span class="op">-</span><span class="fl">8.39</span>, pd <span class="op">=</span> <span class="fl">0.61</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">vsp</span><span class="op">(</span><span class="va">mod</span>, param.list <span class="op">=</span>  <span class="va">pars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vsp</span><span class="op">(</span> <span class="va">envData</span>, param.list <span class="op">=</span>  <span class="va">pars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
