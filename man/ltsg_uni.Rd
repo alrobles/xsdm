@@ -17,7 +17,7 @@ ltsg_uni(env, mu, sigl, sigr)
 \item{sigr}{numeric parameter}
 }
 \value{
-A vector with long term stochastic growht values calculated in each site
+A vector with long term stochastic growth values calculated in each site
 }
 \description{
 Univariate long term stochastic growth function for a

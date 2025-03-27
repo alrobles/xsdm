@@ -9,6 +9,7 @@ fit_xsdm(
   fit = NULL,
   recompile = FALSE,
   compile_standalone = FALSE,
+  chains = 1,
   ...
 )
 }
@@ -26,6 +27,8 @@ to use laplace and optim methods.}
 
 \item{compile_standalone}{Default TRUE. It is useful to export
 loglik functions}
+
+\item{chains}{Number of chains used in MCMC}
 
 \item{...}{argument passed to stan model sampling}
 }

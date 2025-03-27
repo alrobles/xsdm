@@ -5,12 +5,12 @@
 \title{envDataArray
 Get an array of environmental data from presence-absence points.}
 \usage{
-envDataArray(occ, envData)
+envDataArray(envData, occ = NULL)
 }
 \arguments{
-\item{occ}{Occurence data frame. Should contain longitude and latitude columns}
-
 \item{envData}{List of environmental variables time series stack.}
+
+\item{occ}{Occurence data frame. Should contain longitude and latitude columns}
 }
 \value{
 An array of M points times N time steps times P environmental variables
@@ -22,6 +22,7 @@ Get an array of environmental data from presence-absence points.
 \examples{
 occ <- mus_virtualis[1:5, ]
 bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-envData <- list(bio1 = bio1_ts)
-envDataArray(occ, envData)
+bio12_ts <- terra::unwrap(cmcc_cm_bio12)
+envData <- list(bio1 = bio1_ts, bio12 = bio12_ts)
+envDataArray(envData, occ)
 }

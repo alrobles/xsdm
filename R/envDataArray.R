@@ -9,11 +9,12 @@
 #' @examples
 #' occ <- mus_virtualis[1:5, ]
 #' bio1_ts <- terra::unwrap(cmcc_cm_bio1)
-#' envData <- list(bio1 = bio1_ts)
-#' envDataArray(occ, envData)
+#' bio12_ts <- terra::unwrap(cmcc_cm_bio12)
+#' envData <- list(bio1 = bio1_ts, bio12 = bio12_ts)
+#' envDataArray(envData, occ)
 envDataArray <- function(envData, occ = NULL){
 
-  if(is.null(occ)){
+  if(!is.null(occ)){
 
     pts <- terra::vect(occ, geom = c("longitude", "latitude"))
 
@@ -35,7 +36,6 @@ envDataArray <- function(envData, occ = NULL){
     } else{
       envDataArray <- Map(f = \(x){terra::as.matrix(x)}, envData)
       envDataArray <- Map(f = \(x){stats::setNames(x, paste0(names(x)[[1]], "_", 1:ncol(x)))}, envDataArray)
-      envDataArray <- Map(f = as.matrix, envDataArray)
       envDataArray <- simplify2array(envDataArray)
     }
 

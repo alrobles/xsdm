@@ -12,8 +12,7 @@ using namespace RcppParallel;
 double response_func(const double x, const double sigl, const double sigr)
 {
   double v =  x < 0 ?  x/sigl : x/sigr;
-  double response = -0.5 * v * v;
-  return response;
+  return v;
 }
 
 struct Response_Multi : public Worker {

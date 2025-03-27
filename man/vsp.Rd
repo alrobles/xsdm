@@ -2,22 +2,20 @@
 % Please edit documentation in R/vsp.R
 \name{vsp}
 \alias{vsp}
-\alias{vsp.xsdm}
 \title{Virtual species}
 \usage{
-vsp(xsdm_object, param.list = NULL)
-
-\method{vsp}{xsdm}(xsdm_object, param.list = NULL)
+vsp(env_data, param.list = NULL)
 }
 \arguments{
-\item{xsdm_object}{An xsdm object}
+\item{env_data}{A list with environmental time series raster object}
 
-\item{param.list}{A list of parameters}
+\item{param.list}{A list of parameters. Could be null for
+an unidimensional model (i. e. one environmental variable in the
+env list)}
 }
 \value{
-\code{NULL}
-
-\code{NULL}
+A raster with the probability of detectio of the
+virtual species
 }
 \description{
 Virtual species
@@ -26,9 +24,7 @@ Virtual species
 if (instantiate::stan_cmdstan_exists()) {
 bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 envData <- list(bio1 = bio1_ts)
-pts <- mus_virtualis
-mod <- xsdm(envData, occ = pts, fit = FALSE)
 pars <- list(mu = 4.38, sigl = 1.24, sigr = 1.05, c = -8.39, pd = 0.61)
-vsp(mod, param.list =  pars) |> terra::plot()
+vsp( envData, param.list =  pars)
 }
 }

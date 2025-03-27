@@ -22,16 +22,18 @@ functions {
     for(i in 1:M){                      // loop over locations
       for(j in 1:N){                    // loop over time
         w = to_vector(ts_slice[i,j, ]);
-        u = mdivide_left_tri_low(L, w - mu);
+        //u = mdivide_left_tri_low(L, w - mu);
         for (k in 1:P){
           if (u[k] < 0) {
-            v[k] = ( u[k] / sigl[k] )^2;
+            v[k] = ( w[k] / sigl[k] )^2;
         } else {
-            v[k] = ( u[k] / sigr[k] )^2;
+            v[k] = ( w[k] / sigr[k] )^2;
            }
           }
-    response[j] = -0.5 * sum(v);
+    u = mdivide_left_tri_low(L, v);
+    response[j] = -0.5 * sum(u .* u);
     }
+
     loglam[i] = mean(response);
   }
     return bernoulli_lpmf(slice_n_occ | pd * inv_logit(loglam - c));
@@ -45,6 +47,10 @@ data {
   int P; // environmental covariates //NUMBER of env covars
   array[M] int<lower=0,upper=1> occ; //DAN: Binary presence/pseudo-absence.
   array[M,N,P] real ts;
+
+  vector[P] mu_par;
+  vector[P] sigma_par;
+
   int<lower=1> grainsize;
 }
 
@@ -62,12 +68,14 @@ parameters {
 
 model{
   // priors - all weakly informative
-  mu ~ normal(0, 10);
-  sigl ~ exponential(1);
-  sigr ~ exponential(1);
+  for (k in 1:P){
+    mu[k] ~ normal(mu_par[k], mu_par[k]*10);
+    sigl[k] ~ exponential(1/sigma_par[k]);
+    sigr[k] ~ exponential(1/sigma_par[k]);
+  }
   c ~ normal(0, 10);
   pd ~ uniform(0, 1);
-  L ~ lkj_corr_cholesky(2.0);
+  L ~ lkj_corr_cholesky(0.1);
 
   // likelihood
   target += reduce_sum(partial_sum_lupmf,
