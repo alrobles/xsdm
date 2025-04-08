@@ -71,7 +71,14 @@ data {
   int M; // observations
   int N; // timeseries length
   array[M] int<lower=0,upper=1> occ; //Binary presence/pseudo-absence.
+
   matrix[M, N] ts;
+  real mu_par_1;
+  real mu_par_2;
+  real sigl_par;
+  real sigr_par;
+  real c_par_1;
+  real c_par_2;
   int<lower=1> grainsize;
 }
 
@@ -90,12 +97,12 @@ model{
   // auxiliary variables
 
   // priors - all weakly informative
-  mu ~ normal(0, 10); //DAN: Priors make me nervous. In particular, it seems to me
+  mu ~ normal(mu_par_1, mu_par_2); //DAN: Priors make me nervous. In particular, it seems to me
                       //this prior relies on having somehow standardized the
                       //environmental time series, not sure how
-  sigl ~ exponential(1);  // expected value and std = 10
-  sigr ~ exponential(1);  // expected value and std = 10
-  c ~ normal(0, 10); //DAN: These parameters are not the parameters of the same name
+  sigl ~ exponential(sigl_par);  // expected value and std = 10
+  sigr ~ exponential(sigr_par);  // expected value and std = 10
+  c ~ normal(c_par_1, c_par_2); //DAN: These parameters are not the parameters of the same name
                      //in the math write-ups we have, instead they are the re-parameterized
                      //versions, the ones for which we used tildes in the math documents,
                      //including in the paper. I find that notation choice confusing and

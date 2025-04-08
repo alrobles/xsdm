@@ -8,8 +8,11 @@ fit_xsdm(
   xsdm_object,
   fit = NULL,
   recompile = FALSE,
+  normalize = FALSE,
+  prior_parameters = list(mu_par_1 = NULL, mu_par_2 = NULL, sigl_par = NULL, sigr_par =
+    NULL, c_par_1 = NULL, c_par_2 = NULL, L_par = NULL),
+  nchains = NULL,
   compile_standalone = FALSE,
-  chains = 1,
   ...
 )
 }
@@ -25,10 +28,15 @@ Possible parameters are c("mle", "map", "mle.laplace", "map.laplace")}
 to use features not availiable out of the box. It is needed
 to use laplace and optim methods.}
 
+\item{normalize}{Logical, normalize the time series using the mean
+and the standard deviation of the presence-absence provided points}
+
+\item{prior_parameters}{list with parameters passed to prior.}
+
+\item{nchains}{Default NULL. The number of mcmc chains passed to cmdstanr sample function.}
+
 \item{compile_standalone}{Default TRUE. It is useful to export
 loglik functions}
-
-\item{chains}{Number of chains used in MCMC}
 
 \item{...}{argument passed to stan model sampling}
 }

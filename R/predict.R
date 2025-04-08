@@ -33,7 +33,7 @@ predict.xsdm <- function(xsdm_object, index = 1){
     f_par <- f(envM)
     coords <- terra::crds(values$env_data[[1]])
     prob_detect <- suppressWarnings(do.call(f_par, args = df[index, params]))
-    data.frame(coords, prob_detect)|>
+      data.frame(coords, prob_detect)|>
       terra::rast()
   }
 }

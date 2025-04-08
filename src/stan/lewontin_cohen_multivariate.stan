@@ -48,8 +48,14 @@ data {
   array[M] int<lower=0,upper=1> occ; //DAN: Binary presence/pseudo-absence.
   array[M,N,P] real ts;
 
-  vector[P] mu_par;
-  vector[P] sigma_par;
+  vector[P] mu_par_1;
+  vector[P] mu_par_2;
+  vector[P] sigl_par;
+  vector[P] sigr_par;
+  real c_par_1;
+  real c_par_2;
+  real L_par;
+
 
   int<lower=1> grainsize;
 }
@@ -69,13 +75,13 @@ parameters {
 model{
   // priors - all weakly informative
   for (k in 1:P){
-    mu[k] ~ normal(mu_par[k], mu_par[k]*10);
-    sigl[k] ~ exponential(1/sigma_par[k]);
-    sigr[k] ~ exponential(1/sigma_par[k]);
+    mu[k] ~ normal(mu_par_1[k], mu_par_2[k]);
+    sigl[k] ~ exponential(sigl_par[k]);
+    sigr[k] ~ exponential(sigr_par[k]);
   }
-  c ~ normal(0, 10);
+  c ~ normal(c_par_1, c_par_2);
   pd ~ uniform(0, 1);
-  L ~ lkj_corr_cholesky(0.1);
+  L ~ lkj_corr_cholesky(L_par);
 
   // likelihood
   target += reduce_sum(partial_sum_lupmf,
