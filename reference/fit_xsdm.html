@@ -41,8 +41,11 @@
 <span>  <span class="va">xsdm_object</span>,</span>
 <span>  fit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  recompile <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  normalize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  prior_parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mu_par_1 <span class="op">=</span> <span class="cn">NULL</span>, mu_par_2 <span class="op">=</span> <span class="cn">NULL</span>, sigl_par <span class="op">=</span> <span class="cn">NULL</span>, sigr_par <span class="op">=</span></span>
+<span>    <span class="cn">NULL</span>, c_par_1 <span class="op">=</span> <span class="cn">NULL</span>, c_par_2 <span class="op">=</span> <span class="cn">NULL</span>, L_par <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  nchains <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  compile_standalone <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  chains <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -68,13 +71,22 @@ to use features not availiable out of the box. It is needed
 to use laplace and optim methods.</p></dd>
 
 
+<dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
+<dd><p>Logical, normalize the time series using the mean
+and the standard deviation of the presence-absence provided points</p></dd>
+
+
+<dt id="arg-prior-parameters">prior_parameters<a class="anchor" aria-label="anchor" href="#arg-prior-parameters"></a></dt>
+<dd><p>list with parameters passed to prior.</p></dd>
+
+
+<dt id="arg-nchains">nchains<a class="anchor" aria-label="anchor" href="#arg-nchains"></a></dt>
+<dd><p>Default NULL. The number of mcmc chains passed to cmdstanr sample function.</p></dd>
+
+
 <dt id="arg-compile-standalone">compile_standalone<a class="anchor" aria-label="anchor" href="#arg-compile-standalone"></a></dt>
 <dd><p>Default TRUE. It is useful to export
 loglik functions</p></dd>
-
-
-<dt id="arg-chains">chains<a class="anchor" aria-label="anchor" href="#arg-chains"></a></dt>
-<dd><p>Number of chains used in MCMC</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
