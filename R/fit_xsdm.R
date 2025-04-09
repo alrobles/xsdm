@@ -140,8 +140,6 @@ fit_xsdm <- function(xsdm_object,
       prior_parameters$sigl_par  <- sigma_par
     }
 
-    print("sigl_par")
-    print(prior_parameters$sigl_par)
 
     if(is.null(prior_parameters$sigr_par) ){
       sigma_par <- sapply(1:P, function(x){
@@ -151,8 +149,6 @@ fit_xsdm <- function(xsdm_object,
       prior_parameters$sigr_par  <- sigma_par
 
     }
-    print("sigr_par")
-    print(prior_parameters$sigr_par)
 
     if(is.null(prior_parameters$c_par_1) ){
       prior_parameters$c_par_1  <- 0
@@ -213,9 +209,7 @@ fit_xsdm <- function(xsdm_object,
     }
   }
 
-  if(is.null(fit)){
-    stan_model <- model$sample(stan_data, init = init, chains = nchains,...)
-  } else if(fit == "mle"){
+  if(fit == "mle"){
     stan_model <- model$optimize(stan_data, init = list(init_list), jacobian = FALSE, ...)
   }
   else if(fit == "map") {
@@ -226,6 +220,8 @@ fit_xsdm <- function(xsdm_object,
   } else if(fit == "map.laplace"){
     fit_mode   <- model$optimize(stan_data, init = list(init_list), jacobian = TRUE, ...)
     stan_model <- model$laplace(data = stan_data, init = list(init_list), mode = fit_mode, ...)
+  } else {
+    stan_model <- model$sample(stan_data, init = init, chains = nchains,...)
   }
   xsdm <- new_xsdm(env_data = values$env_data,
                           occ = values$occ,
