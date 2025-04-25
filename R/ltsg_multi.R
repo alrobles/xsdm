@@ -19,7 +19,7 @@ ltsg_multi <- function(env, mu, sigl, sigr, L){
     #U <- t(solve(L, W))
     U <- .response_multi(x = W, sigl = sigl, sigr = sigr)
     R <- t(solve(L, t(U)))
-    output[ ,i] <- R
+    output[ ,i] <- .response_halfsquare(R)
   }
   output |>
     .meanRow()

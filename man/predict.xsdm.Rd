@@ -4,13 +4,18 @@
 \alias{predict.xsdm}
 \title{Title}
 \usage{
-\method{predict}{xsdm}(xsdm_object, index = 1)
+\method{predict}{xsdm}(xsdm_object, index = 1, scale = FALSE)
 }
 \arguments{
 \item{xsdm_object}{An xsdm object}
 
 \item{index}{An integer ginving the row index from the sample
 of the posterior. Default 1}
+
+\item{scale}{Logical. Should be environmental scaled?
+This function takes the mean and standard deviation of provided ocurrence (presence/absence) points.
+This scale was used in the fit process.
+to weight the environmental data provided to predict}
 }
 \value{
 A raster map

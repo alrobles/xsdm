@@ -21,10 +21,6 @@ struct Response_Multi : public Worker {
   const RVector<double> sigmal;
   const RVector<double> sigmar;
 
-
-
-  // transition matrix
-  RMatrix<double> pivot;
   // destination matrix
   RMatrix<double> output;
 
@@ -32,30 +28,29 @@ struct Response_Multi : public Worker {
   Response_Multi(const NumericMatrix input,
                  const NumericVector sigmal,
                  const NumericVector sigmar,
-                 NumericMatrix pivot,
                  NumericMatrix output)
-    : input(input), sigmal(sigmal), sigmar(sigmar), pivot(pivot), output(output) {}
+    : input(input), sigmal(sigmal), sigmar(sigmar), output(output) {}
 
 
 
-  // take the square root of the range of elements requested
+  //
   void operator()(std::size_t begin, std::size_t end) {
     // The functor should be inside the void operator
 
     for (std::size_t i = begin; i < end; i++) {
       for(std::size_t j = 0; j < input.ncol(); j++){
         double x  = input(i, j);
-        pivot(i, j) = response_func(x, sigmal[j], sigmar[j]);
+        output(i, j) = response_func(x, sigmal[j], sigmar[j]);
       }
     }
 
     // to check if can be done inside the previous for
 
-    for (std::size_t i = begin; i < end; i++) {
-      RMatrix<double>::Row row_vec = pivot.row(i);
-      double result = std::accumulate(row_vec.begin(), row_vec.end(), 0.0);
-      output(i, 0) = result;
-    }
+    // for (std::size_t i = begin; i < end; i++) {
+    //   RMatrix<double>::Row row_vec = pivot.row(i);
+    //   double result = std::accumulate(row_vec.begin(), row_vec.end(), 0.0);
+    //   output(i, 0) = result;
+    // }
 
   }
 };
@@ -63,14 +58,12 @@ struct Response_Multi : public Worker {
 // [[Rcpp::export(.response_multi)]]
 NumericMatrix response_multi(NumericMatrix x, NumericVector sigl, NumericVector sigr) {
 
-  // allocate the pivot matrix
-  NumericMatrix pivot(x.nrow(), x.ncol());
 
   // allocate the output matrix
-  NumericMatrix output(x.nrow(), 1);
+  NumericMatrix output(x.nrow(), x.ncol());
 
   // SquareRoot functor (pass input and output matrices)
-  Response_Multi response_multi(x, sigl, sigr, pivot, output);
+  Response_Multi response_multi(x, sigl, sigr, output);
 
   // call parallelFor to do the work
   parallelFor(0, x.nrow(), response_multi);
