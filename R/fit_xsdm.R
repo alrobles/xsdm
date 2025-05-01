@@ -220,7 +220,11 @@ fit_xsdm <- function(xsdm_object,
   } else if(fit == "map.laplace"){
     fit_mode   <- model$optimize(stan_data, init = list(init_list), jacobian = TRUE, ...)
     stan_model <- model$laplace(data = stan_data, init = list(init_list), mode = fit_mode, ...)
-  } else {
+  } else if(fit == "pathfinder"){
+    stan_model <- model$pathfinder(data = stan_data, init = list(init_list), ...)
+  }
+
+  else {
     stan_model <- model$sample(stan_data, init = init, chains = nchains,...)
   }
   xsdm <- new_xsdm(env_data = values$env_data,
