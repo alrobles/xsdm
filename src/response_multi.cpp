@@ -11,7 +11,7 @@ using namespace RcppParallel;
 
 double response_func(const double x, const double sigl, const double sigr)
 {
-  double v =  x < 0 ?  x/sigl : x/sigr;
+  double v =  x < 0 ?  x/(sigl*sigl) : x/(sigr*sigr);
   return v;
 }
 

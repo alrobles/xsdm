@@ -25,9 +25,9 @@ functions {
         //u = mdivide_left_tri_low(L, w - mu);
         for (k in 1:P){
           if (u[k] < 0) {
-            v[k] = ( w[k] / sigl[k] );
+            v[k] = ( w[k] / sigl[k] )^2;
         } else {
-            v[k] = ( w[k] / sigr[k] );
+            v[k] = ( w[k] / sigr[k] )^2;
            }
           }
     u = mdivide_left_tri_low(L, v);
