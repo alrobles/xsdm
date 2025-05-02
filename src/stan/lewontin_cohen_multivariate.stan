@@ -25,13 +25,13 @@ functions {
         //u = mdivide_left_tri_low(L, w - mu);
         for (k in 1:P){
           if (u[k] < 0) {
-            v[k] = ( w[k] / sigl[k] )^2;
+            v[k] = ( w[k] / sigl[k] );
         } else {
-            v[k] = ( w[k] / sigr[k] )^2;
+            v[k] = ( w[k] / sigr[k] );
            }
           }
     u = mdivide_left_tri_low(L, v);
-    response[j] = -0.5 * sum(u .* u);
+    response[j] = -0.5 * sum(u.*u);
     }
 
     loglam[i] = mean(response);
