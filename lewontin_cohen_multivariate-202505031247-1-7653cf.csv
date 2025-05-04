@@ -1,0 +1,48 @@
+# stan_version_major = 2
+# stan_version_minor = 36
+# stan_version_patch = 0
+# model = lewontin_cohen_multivariate_model
+# start_datetime = 2025-05-03 17:47:58 UTC
+# method = sample (Default)
+#   sample
+#     num_samples = 100
+#     num_warmup = 100
+#     save_warmup = false (Default)
+#     thin = 1 (Default)
+#     adapt
+#       engaged = true (Default)
+#       gamma = 0.05 (Default)
+#       delta = 0.8 (Default)
+#       kappa = 0.75 (Default)
+#       t0 = 10 (Default)
+#       init_buffer = 75 (Default)
+#       term_buffer = 50 (Default)
+#       window = 25 (Default)
+#       save_metric = false (Default)
+#     algorithm = hmc (Default)
+#       hmc
+#         engine = nuts (Default)
+#           nuts
+#             max_depth = 10 (Default)
+#         metric = diag_e (Default)
+#         metric_file =  (Default)
+#         stepsize = 1 (Default)
+#         stepsize_jitter = 0 (Default)
+#     num_chains = 1 (Default)
+# id = 1 (Default)
+# data
+#   file = C:/Users/alrob/AppData/Local/Temp/RtmpyQxtE2/standata-5ae872cb1b7d.json
+# init = C:/Users/alrob/AppData/Local/Temp/RtmpyQxtE2/init-5ae858cc59d_1.json
+# random
+#   seed = 1142066029
+# output
+#   file = C:/Users/alrob/Documents/GitHub/xsdm/lewontin_cohen_multivariate-202505031247-1-7653cf.csv
+#   diagnostic_file =  (Default)
+#   refresh = 1
+#   sig_figs = -1 (Default)
+#   profile_file = C:/Users/alrob/Documents/GitHub/xsdm/lewontin_cohen_multivariate-profile-202505031247-1-4bb7a3.csv
+#   save_cmdstan_config = false (Default)
+# num_threads = 8 (Default)
+# stanc_version = stanc3 v2.36.0
+# stancflags = --name=lewontin_cohen_multivariate_model
+lp__,accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__,mu.1,mu.2,sigl.1,sigl.2,sigr.1,sigr.2,L.1.1,L.2.1,L.1.2,L.2.2,c,pd

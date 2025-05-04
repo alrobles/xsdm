@@ -18,17 +18,15 @@
 #'
 #' @return a fitted xsdm object
 #'
-fit_xsdm <- function(xsdm_object,
+fit_xsdm_v2 <- function(xsdm_object,
                      fit = NULL,
                      recompile = FALSE,
                      normalize = FALSE,
                      prior_parameters = list(mu_par_1 = NULL,
                                              mu_par_2 = NULL ,
-                                             sigl_par = NULL,
-                                             sigr_par = NULL,
+                                             sig_par = NULL,
                                              c_par_1 = NULL,
-                                             c_par_2 = NULL,
-                                             L_par = NULL),
+                                             c_par_2 = NULL),
                      nchains = NULL,
                      compile_standalone = FALSE,
 
@@ -43,69 +41,7 @@ fit_xsdm <- function(xsdm_object,
                      occ = values$occ)
 
 
-  if(length(values$env_data) == 1){
-
-    if(normalize){
-      ts = (ts - mean(ts))/stats::sd(ts)
-    }
-    if(is.null(prior_parameters$mu_par_1) ){
-      prior_parameters$mu_par_1  <- mean(ts)
-    }
-
-    if(is.null(prior_parameters$mu_par_2) ){
-      prior_parameters$mu_par_2  <- stats::sd(ts)*10
-    }
-
-    if(is.null(prior_parameters$sigl_par) ){
-      prior_parameters$sigl_par  <- 1/stats::sd(ts)
-    }
-
-    if(is.null(prior_parameters$sigr_par) ){
-      prior_parameters$sigr_par  <- 1/stats::sd(ts)
-    }
-
-    if(is.null(prior_parameters$c_par_1) ){
-      prior_parameters$c_par_1  <- 0
-    }
-
-    if(is.null(prior_parameters$c_par_2) ){
-      prior_parameters$c_par_2  <- 10
-    }
-
-
-    stan_data <- list(M = dim(ts)[1],
-                      N = dim(ts)[2],
-                      occ = values$occ$presence,
-                      mu_par_1 = prior_parameters$mu_par_1,
-                      mu_par_2 = prior_parameters$mu_par_2,
-                      sigl_par = prior_parameters$sigl_par,
-                      sigr_par = prior_parameters$sigr_par,
-                      c_par_1 = prior_parameters$c_par_1,
-                      c_par_2 = prior_parameters$c_par_2,
-                      ts = ts,
-                      grainsize = 1
-    )
-
-    model <- instantiate::stan_package_model(
-      name = "lewontin_cohen_univariate",
-      package = "xsdm"
-    )
-
-    if(is.null(nchains)){
-      nchains <- 4
-    }
-
-    init_list <- list(
-      mu = prior_parameters$mu_par_1,
-      sigl = 1/prior_parameters$sigl_par,
-      sigr = 1/prior_parameters$sigl_par,
-      c = 0,
-      pd = 0.9
-    )
-
-    init <- Map(f = \(x){init_list}, 1:nchains )
-
-  } else {
+  {
 
     P = dim(ts)[3]
 
@@ -132,22 +68,12 @@ fit_xsdm <- function(xsdm_object,
       prior_parameters$mu_par_2  <- mu_par_2
     }
 
-    if(is.null(prior_parameters$sigl_par) ){
+    if(is.null(prior_parameters$sig_par) ){
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
       #sigma_par <- 1/sigma_par
-      prior_parameters$sigl_par  <- sigma_par
-    }
-
-
-    if(is.null(prior_parameters$sigr_par) ){
-      sigma_par <- sapply(1:P, function(x){
-        stats::sd(ts[ , ,x])
-      })
-      #sigma_par <- 1/sigma_par
-      prior_parameters$sigr_par  <- sigma_par
-
+      prior_parameters$sig_par  <- sigma_par
     }
 
     if(is.null(prior_parameters$c_par_1) ){
@@ -170,11 +96,9 @@ fit_xsdm <- function(xsdm_object,
                       ts = ts,
                       mu_par_1 = prior_parameters$mu_par_1,
                       mu_par_2 = prior_parameters$mu_par_2,
-                      sigl_par = prior_parameters$sigl_par,
-                      sigr_par = prior_parameters$sigr_par,
+                      sig_par = prior_parameters$sig_par,
                       c_par_1 = prior_parameters$c_par_1,
                       c_par_2 = prior_parameters$c_par_2,
-                      L_par = prior_parameters$L_par,
                       grainsize = 1
     )
 
@@ -184,19 +108,15 @@ fit_xsdm <- function(xsdm_object,
 
     init_list <- list(
       mu = prior_parameters$mu_par_1,
-      sigl = 1/prior_parameters$sigl_par,
-      #sigl = prior_parameters$sigl_par,
-      sigr = 1/prior_parameters$sigr_par,
-      #sigr = prior_parameters$sigr_par,
+      sig = 1/prior_parameters$sig_par,
       c = 0,
       pd = 0.9
-      ,L = diag(nrow = P)
     )
 
     init <- Map(f = \(x){init_list}, 1:nchains )
 
     model <- instantiate::stan_package_model(
-      name = "lewontin_cohen_multivariate",
+      name = "lewontin_cohen_multivariate_v2",
       package = "xsdm"
     )
   }
@@ -213,8 +133,7 @@ fit_xsdm <- function(xsdm_object,
 
   if(fit == "mle"){
     stan_model <- model$optimize(stan_data, init = list(init_list), jacobian = FALSE, ...)
-  }
-  else if(fit == "map") {
+  } else if(fit == "map") {
     stan_model <- model$optimize(stan_data, jacobian = TRUE, ...)
   } else if(fit == "mle.laplace"){
     fit_mode   <- model$optimize(stan_data, init = list(init_list), jacobian = FALSE, ...)
@@ -228,8 +147,8 @@ fit_xsdm <- function(xsdm_object,
     stan_model <- model$sample(stan_data, init = init, chains = nchains,...)
   }
   xsdm <- new_xsdm(env_data = values$env_data,
-                          occ = values$occ,
-                          stan_model = stan_model)
+                   occ = values$occ,
+                   stan_model = stan_model)
 
   return(xsdm)
 }
