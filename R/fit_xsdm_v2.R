@@ -72,7 +72,7 @@ fit_xsdm_v2 <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      sigma_par <- 1/sigma_par
+      sigma_par <- 1/(sigma_par*10)
       prior_parameters$sig_par  <- sigma_par
     }
 
