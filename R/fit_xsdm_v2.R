@@ -72,7 +72,7 @@ fit_xsdm_v2 <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      #sigma_par <- 1/sigma_par
+      sigma_par <- 1/sigma_par
       prior_parameters$sig_par  <- sigma_par
     }
 
@@ -84,9 +84,9 @@ fit_xsdm_v2 <- function(xsdm_object,
       prior_parameters$c_par_2  <- 10
     }
 
-    if(is.null(prior_parameters$L_par) ){
-      prior_parameters$L_par  <- 2
-    }
+    # if(is.null(prior_parameters$L_par) ){
+    #   prior_parameters$L_par  <- 2
+    # }
 
 
     stan_data <- list(M = dim(ts)[1],
