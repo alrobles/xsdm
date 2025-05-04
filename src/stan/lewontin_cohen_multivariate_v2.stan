@@ -22,9 +22,10 @@ functions {
       for(j in 1:N){                    // loop over time
         w = to_vector(ts_slice[i, j, ]);
         //u = mdivide_left_tri_low(L, w - mu);
-        u = w - mu;
+
         for (k in 1:P){
-          v[k] = ( w[k] / sig[k] );
+          //u = (w - mu)/sig;
+          v[k] = ( (w[k] - mu[k])  / sig[k] );
           }
     //u = mdivide_left_tri_low(L, v);
     response[j] = -0.5 * sum(v.*v);
