@@ -136,7 +136,7 @@ fit_xsdm <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      #sigma_par <- 1/sigma_par
+      sigma_par <- 1/(sigma_par*10)
       prior_parameters$sigl_par  <- sigma_par
     }
 
@@ -145,7 +145,7 @@ fit_xsdm <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      #sigma_par <- 1/sigma_par
+      sigma_par <- 1/(sigma_par*10)
       prior_parameters$sigr_par  <- sigma_par
 
     }
@@ -184,10 +184,8 @@ fit_xsdm <- function(xsdm_object,
 
     init_list <- list(
       mu = prior_parameters$mu_par_1,
-      sigl = 1/prior_parameters$sigl_par,
-      #sigl = prior_parameters$sigl_par,
-      sigr = 1/prior_parameters$sigr_par,
-      #sigr = prior_parameters$sigr_par,
+      sigl = 10/prior_parameters$sigl_par,
+      sigr = 10/prior_parameters$sigr_par,
       c = 0,
       pd = 0.9
       ,L = diag(nrow = P)
