@@ -20,8 +20,9 @@ functions {
 
     for(i in 1:M){                      // loop over locations
       for(j in 1:N){                    // loop over time
-        w = to_vector(ts_slice[i,j, ]);
+        w = to_vector(ts_slice[i, j, ]);
         //u = mdivide_left_tri_low(L, w - mu);
+        u = w - mu;
         for (k in 1:P){
           v[k] = ( w[k] / sig[k] );
           }
