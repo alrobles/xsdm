@@ -72,6 +72,11 @@ fit_xsdm <- function(xsdm_object,
       prior_parameters$c_par_2  <- 10
     }
 
+    if(is.null(prior_parameters$L_par) ){
+      prior_parameters$L_par  <- 2
+    }
+
+
 
     stan_data <- list(M = dim(ts)[1],
                       N = dim(ts)[2],
@@ -136,7 +141,7 @@ fit_xsdm <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      sigma_par <- 1/(sigma_par*10)
+      sigma_par <- 1/(sigma_par)
       prior_parameters$sigl_par  <- sigma_par
     }
 
@@ -145,7 +150,7 @@ fit_xsdm <- function(xsdm_object,
       sigma_par <- sapply(1:P, function(x){
         stats::sd(ts[ , ,x])
       })
-      sigma_par <- 1/(sigma_par*10)
+      sigma_par <- 1/(sigma_par)
       prior_parameters$sigr_par  <- sigma_par
 
     }
@@ -184,8 +189,8 @@ fit_xsdm <- function(xsdm_object,
 
     init_list <- list(
       mu = prior_parameters$mu_par_1,
-      sigl = 10/prior_parameters$sigl_par,
-      sigr = 10/prior_parameters$sigr_par,
+      sigl = 1/prior_parameters$sigl_par,
+      sigr = 1/prior_parameters$sigr_par,
       c = 0,
       pd = 0.9
       ,L = diag(nrow = P)

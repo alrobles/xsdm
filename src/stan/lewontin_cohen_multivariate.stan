@@ -24,11 +24,11 @@ functions {
         w = to_vector(ts_slice[i,j, ]);
         //u = mdivide_left_tri_low(L, w - mu);
         for (k in 1:P){
-          u[k] = (w[k] - mu[k]);
-          if (u[k] < 0) {
-            v[k] = ( u[k] / sigl[k] );
+          v[k] = (w[k] - mu[k]);
+          if (v[k] < 0) {
+            v[k] = ( v[k] / sigl[k] );
         } else {
-            v[k] = ( u[k] / sigr[k] );
+            v[k] = ( v[k] / sigr[k] );
            }
           }
     u = mdivide_left_tri_low(L, v);
