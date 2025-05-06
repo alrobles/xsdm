@@ -42,6 +42,9 @@ fit_xsdm <- function(xsdm_object,
   ts <- envDataArray(values$env_data,
                      occ = values$occ)
 
+  ts_presence <- envDataArray(values$env_data,
+                     occ = values$occ[values$occ$presence == 1, ])
+
 
   if(length(values$env_data) == 1){
 
@@ -49,19 +52,19 @@ fit_xsdm <- function(xsdm_object,
       ts = (ts - mean(ts))/stats::sd(ts)
     }
     if(is.null(prior_parameters$mu_par_1) ){
-      prior_parameters$mu_par_1  <- mean(ts)
+      prior_parameters$mu_par_1  <- mean(ts_presence)
     }
 
     if(is.null(prior_parameters$mu_par_2) ){
-      prior_parameters$mu_par_2  <- stats::sd(ts)*10
+      prior_parameters$mu_par_2  <- stats::sd(ts_presence)*10
     }
 
     if(is.null(prior_parameters$sigl_par) ){
-      prior_parameters$sigl_par  <- 1/stats::sd(ts)
+      prior_parameters$sigl_par  <- 1/stats::sd(ts_presence)
     }
 
     if(is.null(prior_parameters$sigr_par) ){
-      prior_parameters$sigr_par  <- 1/stats::sd(ts)
+      prior_parameters$sigr_par  <- 1/stats::sd(ts_presence)
     }
 
     if(is.null(prior_parameters$c_par_1) ){
