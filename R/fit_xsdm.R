@@ -229,7 +229,8 @@ fit_xsdm <- function(xsdm_object,
     fit_mode   <- model$optimize(stan_data, init = list(init_list), jacobian = TRUE, ...)
     stan_model <- model$laplace(data = stan_data, init = list(init_list), mode = fit_mode, ...)
   } else if(fit == "pathfinder"){
-    stan_model <- model$pathfinder(data = stan_data, ...)
+    num_paths = nchains
+    stan_model <- model$pathfinder(data = stan_data, init = init <- Map(f = \(x){init_list}, 1:nchains ), num_paths  = nchains, ...)
   } else {
     stan_model <- model$sample(stan_data, init = init, chains = nchains,...)
   }
