@@ -20,8 +20,8 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/cmcc_cm_bio1.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/cmcc_cm_bio12.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/envDataArray.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/envGridArray.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/fit_xsdm.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/fit_xsdm_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/idem.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/index.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/lc_multivariate.html</loc></url>
@@ -29,26 +29,20 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/loo.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/ltsg.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/ltsg_multi.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/ltsg_multi_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/ltsg_uni.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/ltsg_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/mus_virtualis.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/new_xsdm.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/predict.xsdm.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/prob_detec.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/prob_detec_multi.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/prob_detec_multi_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/prob_detec_uni.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/prob_detec_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/run_lc_model_univariate.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/sample_points.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/validate_xsdm.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/vsp.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/vsp_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/warnifnot.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/xsdm-package.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/xsdm.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/xsdm_v2.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/zero_raster.html</loc></url>
 </urlset>
 
