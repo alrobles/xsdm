@@ -25,6 +25,6 @@ if (instantiate::stan_cmdstan_exists()) {
 bio1_ts <- terra::unwrap(cmcc_cm_bio1)
 envData <- list(bio1 = bio1_ts)
 pars <- list(mu = 4.38, sigl = 1.24, sigr = 1.05, c = -8.39, pd = 0.61)
-vsp( envData, param.list =  pars)0
+vsp( envData, param.list =  pars)
 }
 }
