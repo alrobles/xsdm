@@ -4,7 +4,7 @@
 #' a list of environmental time series
 #'
 #' @param envData A list with environmental raster time series
-#' @param lenght.out Number of grid splits
+#' @param lenght Number of grid splits
 #'
 #' @returns An array with environmental combinations from a grid
 #' @export

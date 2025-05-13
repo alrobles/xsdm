@@ -14,7 +14,7 @@ an unidimensional model (i. e. one environmental variable in the
 env list)}
 }
 \value{
-A raster with the probability of detectio of the
+A raster with the probability of detection of the
 virtual species
 }
 \description{

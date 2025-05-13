@@ -5,7 +5,7 @@
 #' an unidimensional model (i. e. one environmental variable in the
 #' env list)
 #'
-#' @return A raster with the probability of detectio of the
+#' @return A raster with the probability of detection of the
 #' virtual species
 #' @export
 #'
