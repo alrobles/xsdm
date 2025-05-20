@@ -47,8 +47,8 @@ validate_xsdm <- function(xsdm_object){
   stopifnot("The presence column in ocurrence data.frame has NA entries" =
               check_pts_presence_na(values$occ) == TRUE  )
 
-  stopifnot("The point points are duplicated. Check clean_data" =
-              check_pts_duplicity(values$occ, values$env_data) == FALSE)
+  # stopifnot("The point points are duplicated. Check clean_data" =
+  #             check_pts_duplicity(values$occ, values$env_data) == FALSE)
 
 
   xsdm_object

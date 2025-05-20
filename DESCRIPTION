@@ -28,7 +28,7 @@ Imports:
     terra,
     utils,
     instantiate,
-    Rcpp (>= 1.0.13),
+    Rcpp (>= 1.0.12),
     RcppParallel (>= 5.1.9),
     stats,
     data.table
