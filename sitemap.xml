@@ -11,7 +11,6 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_spatraster.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_timestep.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_envdata_timestep_consistency.html</loc></url>
-<url><loc>https://alrobles.github.io/xsdm/reference/check_pts_duplicity.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_pts_haslonglat.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_pts_presence.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/check_pts_presence_binary.html</loc></url>
@@ -21,6 +20,7 @@
 <url><loc>https://alrobles.github.io/xsdm/reference/cmcc_cm_bio12.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/envDataArray.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/envGridArray.html</loc></url>
+<url><loc>https://alrobles.github.io/xsdm/reference/envGridLtsg.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/envGridProb.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/fit_xsdm.html</loc></url>
 <url><loc>https://alrobles.github.io/xsdm/reference/idem.html</loc></url>
