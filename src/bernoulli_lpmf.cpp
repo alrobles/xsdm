@@ -11,7 +11,7 @@ using namespace RcppParallel;
 
 double bernoulli_lpmf_function(double y, double theta) {
   // Ensure theta is within the valid range (0, 1)
-  theta = std::clamp(theta, 0.0, 1.0);
+  //theta = std::clamp(theta, 0.0, 1.0);
 
   if (y == 1) {
     return std::log(theta);
