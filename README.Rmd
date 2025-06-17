@@ -24,27 +24,41 @@ xsdm: A demographic approach to species distribution model
 
 ## Installation
 
-You can install the development version of xsdm from [GitHub](https://github.com/emilio-berti/xsdm/tree/develpackage) with:
+`xsdm` relies on cmdstanr package. Please install first 
+this package tha is not in cran with the following code:
 
 ``` r
-# install.packages("pak")
-pak::pak("alrobles/xsdm/")
+install.packages("cmdstanr", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
 ```
+
+Following this you need to install cmdstan
+
+```r
+cmdstanr::install_cmdstan()
+```
+
+After this, you can install the development version of xsdm from [GitHub](https://github.com/alrobles/xsdm/) with:
+
+``` r
+remotes::install_github("alrobles/xsdm/")
+```
+
 
 ## Quick Start
 We provide here a basic example to get a species distribution model (SDM) using `xsdm`.  
 
 ### First step
 The first step is to create a list with the raster stack 
-of environmental time series of variables. These example rasters are packaged for distribution with the `xsdm` package. We use the `terra::unwrap` function to unpack and use them.
+of environmental time series of variables. These example rasters are packaged for distribution with the `xsdm` package. We use the `terra::rast` function to convert a data frame in a time series raster.
 
 
 ```{r step1}
 library(xsdm)
-bio1 <- cmcc_cm_bio1 
-bio1 <- terra::unwrap(bio1)
-bio12 <- cmcc_cm_bio12 
-bio12 <- terra::unwrap(bio12)
+library(terra)
+bio1 <- xsdm::bio1_df 
+bio1 <- terra::rast(bio1)
+terra::time(bio1) <- 1981:2010
+
 ```
 
 These correspond to a 30-year time series of the bioclimatic variables bio1 (average annual temperature) and bio12 (cumulative annual precipitation) obtained from the project 
