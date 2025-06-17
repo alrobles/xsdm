@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param xsdm_object An xsdm object
+#' @param object An xsdm object
 #' @param index An integer ginving the row index from the sample
 #' of the posterior. Default 1
 #' @param scale Logical. Should be environmental scaled?
@@ -22,8 +22,8 @@
 #' predict(mod)
 #' }
 
-predict.xsdm <- function(xsdm_object, index = 1, scale = FALSE){
-  values  <- unclass(xsdm_object)
+predict.xsdm <- function(object, index = 1, scale = FALSE){
+  values  <- unclass(object)
   meta <- values$stan_model$metadata()
   match_lp <-  grep(pattern = "^lp", x = meta$model_params)
   params <- meta$model_params[-match_lp]

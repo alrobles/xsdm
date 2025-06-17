@@ -4,10 +4,10 @@
 \alias{predict.xsdm}
 \title{Title}
 \usage{
-\method{predict}{xsdm}(xsdm_object, index = 1, scale = FALSE)
+\method{predict}{xsdm}(object, index = 1, scale = FALSE)
 }
 \arguments{
-\item{xsdm_object}{An xsdm object}
+\item{object}{An xsdm object}
 
 \item{index}{An integer ginving the row index from the sample
 of the posterior. Default 1}

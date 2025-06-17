@@ -25,13 +25,13 @@ Depends:
     R (>= 4.1)
 RoxygenNote: 7.3.2
 Imports: 
-    terra (>= 1.7-65),
+    terra (>= 1.5-21),
     utils,
     instantiate,
-    Rcpp (>= 1.0.12),
+    Rcpp (>= 1.0.8),
     RcppParallel (>= 5.1.7),
     stats,
-    data.table (>= 1.14.10)
+    data.table (>= 1.14.2)
 LinkingTo: Rcpp, RcppParallel
 SystemRequirements: 
     GNU make,
