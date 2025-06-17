@@ -11,12 +11,24 @@ xsdm: A demographic approach to species distribution model
 
 ## Installation
 
-You can install the development version of xsdm from
-[GitHub](https://github.com/emilio-berti/xsdm/tree/develpackage) with:
+`xsdm` relies on cmdstanr package. Please install first this package tha
+is not in cran with the following code:
 
 ``` r
-# install.packages("pak")
-pak::pak("alrobles/xsdm/")
+install.packages("cmdstanr", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
+```
+
+Following this you need to install cmdstan
+
+``` r
+cmdstanr::install_cmdstan()
+```
+
+After this, you can install the development version of xsdm from
+[GitHub](https://github.com/alrobles/xsdm/) with:
+
+``` r
+remotes::install_github("alrobles/xsdm")
 ```
 
 ## Quick Start
@@ -29,7 +41,7 @@ We provide here a basic example to get a species distribution model
 The first step is to create a list with the raster stack of
 environmental time series of variables. These example rasters are
 packaged for distribution with the `xsdm` package. We use the
-`terra::unwrap` function to unpack and use them.
+`terra::rast` function to convert a data frame in a time series raster.
 
 ``` r
 library(xsdm)
@@ -37,10 +49,10 @@ library(xsdm)
 #> Type 'citation("xsdm")' for citing this R package in publications.
 #> 
 #> This package depends on cmdstanr that is not in CRAN
-bio1 <- cmcc_cm_bio1 
-bio1 <- terra::unwrap(bio1)
-bio12 <- cmcc_cm_bio12 
-bio12 <- terra::unwrap(bio12)
+library(terra)
+#> terra 1.8.54
+bio1 <- xsdm::bio1_df 
+bio1 <- terra::rast(bio1)
 ```
 
 These correspond to a 30-year time series of the bioclimatic variables
@@ -91,7 +103,6 @@ function `xsdm`:
 
 ``` r
 model <- xsdm(envData, occ)
-#> [1] ""
 #> Running MCMC with 4 sequential chains...
 #> 
 #> Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
@@ -116,7 +127,7 @@ model <- xsdm(envData, occ)
 #> Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 1 finished in 3.4 seconds.
+#> Chain 1 finished in 2.7 seconds.
 #> Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -139,7 +150,7 @@ model <- xsdm(envData, occ)
 #> Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 2 finished in 2.4 seconds.
+#> Chain 2 finished in 3.0 seconds.
 #> Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -162,7 +173,7 @@ model <- xsdm(envData, occ)
 #> Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 3 finished in 3.0 seconds.
+#> Chain 3 finished in 2.4 seconds.
 #> Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -185,12 +196,12 @@ model <- xsdm(envData, occ)
 #> Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 4 finished in 4.5 seconds.
+#> Chain 4 finished in 2.2 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 3.3 seconds.
-#> Total execution time: 13.7 seconds.
-#> Warning: 92 of 4000 (2.0%) transitions ended with a divergence.
+#> Mean chain execution time: 2.6 seconds.
+#> Total execution time: 10.8 seconds.
+#> Warning: 187 of 4000 (5.0%) transitions ended with a divergence.
 #> See https://mc-stan.org/misc/warnings for details.
 ```
 

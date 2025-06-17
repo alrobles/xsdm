@@ -27,19 +27,19 @@ xsdm: A demographic approach to species distribution model
 `xsdm` relies on cmdstanr package. Please install first 
 this package tha is not in cran with the following code:
 
-```{r, echo=FALSE}
+```{r,  eval=FALSE}
 install.packages("cmdstanr", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
 ```
 
 Following this you need to install cmdstan
 
-```{r, echo=FALSE}
+```{r, eval=FALSE}
 cmdstanr::install_cmdstan()
 ```
 
 After this, you can install the development version of xsdm from [GitHub](https://github.com/alrobles/xsdm/) with:
 
-```{r}
+```{r,  eval=FALSE}
 remotes::install_github("alrobles/xsdm")
 ```
 
@@ -57,7 +57,6 @@ library(xsdm)
 library(terra)
 bio1 <- xsdm::bio1_df 
 bio1 <- terra::rast(bio1)
-terra::time(bio1) <- 1981:2010
 
 ```
 
