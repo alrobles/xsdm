@@ -17,20 +17,20 @@ validate_xsdm <- function(xsdm_object){
               check_envdata_crs(values$env_data) != FALSE ) |>
     try()
 
-  stopifnot("All elements in env_data should have time assigned" =
-              check_envdata_hastime(values$env_data) != FALSE  ) |>
-    try()
+  # stopifnot("All elements in env_data should have time assigned" =
+  #             check_envdata_hastime(values$env_data) != FALSE  ) |>
+  #   try()
+  #
+  # consistency <- check_envdata_timestep_consistency(values$env_data)
+  # consistency_msg <- consistency$msg
+  #
+  # warnifnot("All elements in env_data should be
+  #           year time series. Check reference." =
+  #             check_envdata_timestep(values$env_data) != FALSE ) |>
+  #   tryCatch()
 
-  consistency <- check_envdata_timestep_consistency(values$env_data)
-  consistency_msg <- consistency$msg
-
-  warnifnot("All elements in env_data should be
-            year time series. Check reference." =
-              check_envdata_timestep(values$env_data) != FALSE ) |>
-    tryCatch()
-
-  stopifnot(consistency_msg = consistency$flag == TRUE)  |>
-    tryCatch(finally = print(consistency_msg))
+  # stopifnot(consistency_msg = consistency$flag == TRUE)  |>
+  #   tryCatch(finally = print(consistency_msg))
 
   stopifnot("The ocurrence data.frame doesn't have longitude and/or latitude columns" =
               check_pts_haslonglat(values$occ) == TRUE  ) |>

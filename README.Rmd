@@ -27,13 +27,13 @@ xsdm: A demographic approach to species distribution model
 `xsdm` relies on cmdstanr package. Please install first 
 this package tha is not in cran with the following code:
 
-```{r}
+```{r, echo=FALSE}
 install.packages("cmdstanr", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
 ```
 
 Following this you need to install cmdstan
 
-```{r}
+```{r, echo=FALSE}
 cmdstanr::install_cmdstan()
 ```
 
