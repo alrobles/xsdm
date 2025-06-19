@@ -139,7 +139,7 @@
 <span><span class="co">#&gt; Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 1 finished in 2.7 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1 finished in 5.5 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) </span></span>
@@ -162,7 +162,7 @@
 <span><span class="co">#&gt; Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 2 finished in 3.0 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2 finished in 5.9 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) </span></span>
@@ -185,7 +185,7 @@
 <span><span class="co">#&gt; Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 3 finished in 2.4 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3 finished in 7.4 seconds.</span></span>
 <span><span class="co">#&gt; Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) </span></span>
@@ -208,20 +208,73 @@
 <span><span class="co">#&gt; Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 4 finished in 2.2 seconds.</span></span>
+<span><span class="co">#&gt; Chain 4 finished in 5.5 seconds.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; All 4 chains finished successfully.</span></span>
-<span><span class="co">#&gt; Mean chain execution time: 2.6 seconds.</span></span>
-<span><span class="co">#&gt; Total execution time: 10.8 seconds.</span></span>
-<span><span class="co">#&gt; Warning: 187 of 4000 (5.0%) transitions ended with a divergence.</span></span>
+<span><span class="co">#&gt; Mean chain execution time: 6.1 seconds.</span></span>
+<span><span class="co">#&gt; Total execution time: 24.6 seconds.</span></span>
+<span><span class="co">#&gt; Warning: 139 of 4000 (3.0%) transitions ended with a divergence.</span></span>
 <span><span class="co">#&gt; See https://mc-stan.org/misc/warnings for details.</span></span></code></pre></div>
 <p>In the design of xsdm we simplify the use with a main <code>xsdm</code> function. Innerlly this function controls the model flow.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<h2 id="what-is-xsdm">What is xsdm<a class="anchor" aria-label="anchor" href="#what-is-xsdm"></a>
 </h2>
 <p><code>xsdm</code> integrates concepts of stochastic demography into species distribution modelling. Inferences, utilizing Bayesian methods based in ‘Stan’, are made of aspects of the environmental niche of a species, and those inferences can be used to project species geographic range. See Berti et al. (2024, <a href="doi:10.1101/2024.10.30.621023" class="uri">doi:10.1101/2024.10.30.621023</a>) for a description of the statistical and demographic models used.</p>
+</div>
+<div class="section level2">
+<h2 id="virtual-species">Virtual species<a class="anchor" aria-label="anchor" href="#virtual-species"></a>
+</h2>
+<p>In order to follow with more examples we provide an auxiliary data package with examples to show the xsdm funcionalities.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"xsdmexamples"</span>, repos<span class="op">=</span><span class="st">"https://alrobles.github.io/drat/"</span><span class="op">)</span></span></code></pre></div>
+<p>Then we create a raster list with two environmental variables. This example is centered in a small portion of South New Mexico with 1 km^2 of spatial resolution.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">xsdmexamples</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span><span class="va">bio1</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">bio1_df_NM</span><span class="op">)</span></span>
+<span><span class="va">bio12</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">bio12_df_NM</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">envData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bio1 <span class="op">=</span> <span class="va">bio1</span>, bio12 <span class="op">=</span> <span class="va">bio12</span><span class="op">)</span></span></code></pre></div>
+<p>We are going to create a virtual species with the function <code>vsp</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alrobles.github.io/xsdm/">xsdm</a></span><span class="op">)</span></span>
+<span><span class="va">virt_rast</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/vsp.html">vsp</a></span><span class="op">(</span>env_data <span class="op">=</span> <span class="va">envData</span>, </span>
+<span>                 param.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">700</span><span class="op">)</span>, </span>
+<span>                                sigl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span>
+<span>                                sigr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">50</span><span class="op">)</span>,</span>
+<span>                                c <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>,</span>
+<span>                                pd <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                                L <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">virt_rast</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plotvsp-1.png" width="100%"></p>
+<p>Then we are going to create a random sample of points from this virtual species</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">df_presence</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/sample.html" class="external-link">spatSample</a></span><span class="op">(</span><span class="va">virt_rast</span>, <span class="fl">1000</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, xy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: [is.lonlat] assuming lon/lat crs</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df_presence</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"longitude"</span>, <span class="st">"latitude"</span>, <span class="st">"probs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_presence</span><span class="op">$</span><span class="va">presence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df_presence</span><span class="op">)</span>,</span>
+<span>                               size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                               prob <span class="op">=</span> <span class="va">df_presence</span><span class="op">$</span><span class="va">probs</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s run a model to test that <code>xsdm</code> can retrieve the parameters we created the virtual species with.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/xsdm.html">xsdm</a></span><span class="op">(</span><span class="va">envData</span>, <span class="va">df_presence</span>,</span>
+<span>              recompile <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>              max_treedepth <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>              adapt_delta <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>              nchains <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>              parallel_chains <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>              threads_per_chain <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>              iter_warmup <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>              iter_sampling <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>              refresh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
