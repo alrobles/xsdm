@@ -97,6 +97,78 @@ model <- xsdm(envData, occ)
 In the design of xsdm we simplify the use with a main `xsdm` function. Innerlly this function controls
 the model flow.
 
-## Introduction
+## What is xsdm
 `xsdm` integrates concepts of stochastic demography into species distribution modelling. Inferences, utilizing Bayesian methods based in 'Stan', are made of aspects of the environmental niche of a species, and those inferences can be used to project species geographic range. See Berti et al. (2024, <doi:10.1101/2024.10.30.621023>) for a description of the statistical and demographic models used.
 
+
+## Virtual species
+
+In order to follow with more examples we provide an auxiliary data package with examples to show the xsdm funcionalities.
+```{r step5, eval=FALSE}
+install.packages("xsdmexamples", repos="https://alrobles.github.io/drat/")
+```
+
+Then we create a raster list with two environmental variables.
+This example is centered in a small portion of South New Mexico
+with 1 km^2 of spatial resolution.
+
+```{r step6}
+
+library(xsdmexamples)
+library(terra)
+bio1 <- terra::rast(bio1_df_NM)
+bio12 <- terra::rast(bio12_df_NM)
+
+envData <- list(bio1 = bio1, bio12 = bio12)
+
+```
+We are going to create a virtual species with the function 
+`vsp`.
+
+
+```{r step7}
+library(xsdm)
+virt_rast <- vsp(env_data = envData, 
+                 param.list = list(mu = c(8, 700), 
+                                sigl = c(1, 100),
+                                sigr = c(2, 50),
+                                c = -5,
+                                pd = 0.8,
+                                L = matrix(c(1,0,0,1), ncol = 2) ))
+```
+```{r plotvsp}
+library(terra)
+plot(virt_rast)
+```
+
+Then we are going to create a random sample of points from this
+virtual species
+
+
+```{r}
+
+df_presence <- terra::spatSample(virt_rast, 1000, na.rm = TRUE, xy = TRUE)
+
+names(df_presence) <- c("longitude", "latitude", "probs")
+
+df_presence$presence <- rbinom(nrow(df_presence),
+                               size = 1,
+                               prob = df_presence$probs)
+
+
+
+```
+Let's run a model to test that `xsdm` can retrieve the parameters we created the virtual species with.
+
+```{r step8, eval=FALSE}
+model <- xsdm(envData, df_presence,
+              recompile = TRUE,
+              max_treedepth = 10,
+              adapt_delta = 0.8,
+              nchains = 4,
+              parallel_chains = 4,
+              threads_per_chain = 5,
+              iter_warmup = 500,
+              iter_sampling = 500,
+              refresh = 10)
+```

@@ -127,7 +127,7 @@ model <- xsdm(envData, occ)
 #> Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 1 finished in 2.7 seconds.
+#> Chain 1 finished in 5.5 seconds.
 #> Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -150,7 +150,7 @@ model <- xsdm(envData, occ)
 #> Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 2 finished in 3.0 seconds.
+#> Chain 2 finished in 5.9 seconds.
 #> Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -173,7 +173,7 @@ model <- xsdm(envData, occ)
 #> Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 3 finished in 2.4 seconds.
+#> Chain 3 finished in 7.4 seconds.
 #> Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 #> Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
 #> Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -196,19 +196,19 @@ model <- xsdm(envData, occ)
 #> Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 #> Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 #> Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 4 finished in 2.2 seconds.
+#> Chain 4 finished in 5.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 2.6 seconds.
-#> Total execution time: 10.8 seconds.
-#> Warning: 187 of 4000 (5.0%) transitions ended with a divergence.
+#> Mean chain execution time: 6.1 seconds.
+#> Total execution time: 24.6 seconds.
+#> Warning: 139 of 4000 (3.0%) transitions ended with a divergence.
 #> See https://mc-stan.org/misc/warnings for details.
 ```
 
 In the design of xsdm we simplify the use with a main `xsdm` function.
 Innerlly this function controls the model flow.
 
-## Introduction
+## What is xsdm
 
 `xsdm` integrates concepts of stochastic demography into species
 distribution modelling. Inferences, utilizing Bayesian methods based in
@@ -216,3 +216,77 @@ distribution modelling. Inferences, utilizing Bayesian methods based in
 those inferences can be used to project species geographic range. See
 Berti et al. (2024, <doi:10.1101/2024.10.30.621023>) for a description
 of the statistical and demographic models used.
+
+## Virtual species
+
+In order to follow with more examples we provide an auxiliary data
+package with examples to show the xsdm funcionalities.
+
+``` r
+install.packages("xsdmexamples", repos="https://alrobles.github.io/drat/")
+```
+
+Then we create a raster list with two environmental variables. This
+example is centered in a small portion of South New Mexico with 1 km^2
+of spatial resolution.
+
+``` r
+
+library(xsdmexamples)
+library(terra)
+bio1 <- terra::rast(bio1_df_NM)
+bio12 <- terra::rast(bio12_df_NM)
+
+envData <- list(bio1 = bio1, bio12 = bio12)
+```
+
+We are going to create a virtual species with the function `vsp`.
+
+``` r
+library(xsdm)
+virt_rast <- vsp(env_data = envData, 
+                 param.list = list(mu = c(8, 700), 
+                                sigl = c(1, 100),
+                                sigr = c(2, 50),
+                                c = -5,
+                                pd = 0.8,
+                                L = matrix(c(1,0,0,1), ncol = 2) ))
+```
+
+``` r
+library(terra)
+plot(virt_rast)
+```
+
+<img src="man/figures/README-plotvsp-1.png" width="100%" />
+
+Then we are going to create a random sample of points from this virtual
+species
+
+``` r
+
+df_presence <- terra::spatSample(virt_rast, 1000, na.rm = TRUE, xy = TRUE)
+#> Warning: [is.lonlat] assuming lon/lat crs
+
+names(df_presence) <- c("longitude", "latitude", "probs")
+
+df_presence$presence <- rbinom(nrow(df_presence),
+                               size = 1,
+                               prob = df_presence$probs)
+```
+
+Let’s run a model to test that `xsdm` can retrieve the parameters we
+created the virtual species with.
+
+``` r
+model <- xsdm(envData, df_presence,
+              recompile = TRUE,
+              max_treedepth = 10,
+              adapt_delta = 0.8,
+              nchains = 4,
+              parallel_chains = 4,
+              threads_per_chain = 5,
+              iter_warmup = 500,
+              iter_sampling = 500,
+              refresh = 10)
+```
