@@ -171,8 +171,8 @@ fit_xsdm_berti <- function(xsdm_object,
     }
 
 
-    stan_data <- list(M = dim(ts)[1],
-                      N = dim(ts)[2],
+    stan_data <- list(N = dim(ts)[1],
+                      M = dim(ts)[2],
                       P = dim(ts)[3],
                       occ = values$occ$presence,
                       ts = ts,
