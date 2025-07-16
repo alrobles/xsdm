@@ -4,7 +4,7 @@
 \alias{predict.xsdm}
 \title{Title}
 \usage{
-\method{predict}{xsdm}(object, index = 1, scale = FALSE)
+\method{predict}{xsdm}(object, index = 1, scale = FALSE, ...)
 }
 \arguments{
 \item{object}{An xsdm object}
@@ -16,6 +16,8 @@ of the posterior. Default 1}
 This function takes the mean and standard deviation of provided ocurrence (presence/absence) points.
 This scale was used in the fit process.
 to weight the environmental data provided to predict}
+
+\item{...}{pass arguments}
 }
 \value{
 A raster map

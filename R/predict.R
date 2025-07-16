@@ -7,7 +7,7 @@
 #' This function takes the mean and standard deviation of provided ocurrence (presence/absence) points.
 #' This scale was used in the fit process.
 #' to weight the environmental data provided to predict
-#'
+#' @param ... pass arguments
 #' @return A raster map
 #' @method predict xsdm
 #' @aliases predict.xsdm
@@ -22,7 +22,7 @@
 #' predict(mod)
 #' }
 
-predict.xsdm <- function(object, index = 1, scale = FALSE){
+predict.xsdm <- function(object, index = 1, scale = FALSE, ...){
   values  <- unclass(object)
   meta <- values$stan_model$metadata()
   match_lp <-  grep(pattern = "^lp", x = meta$model_params)
