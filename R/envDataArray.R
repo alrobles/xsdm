@@ -31,10 +31,10 @@ envDataArray <- function(envData, occ = NULL){
   } else {
 
     if(length(envData) == 1){
-      envDataArray <- terra::as.matrix(envData[[1]])
+      envDataArray <- terra::as.data.frame(envData[[1]])
       envDataArray <- as.matrix(envDataArray)
     } else{
-      envDataArray <- Map(f = \(x){terra::as.matrix(x)}, envData)
+      envDataArray <- Map(f = \(x){as.matrix(terra::as.data.frame(x))}, envData)
       envDataArray <- Map(f = \(x){stats::setNames(x, paste0(names(x)[[1]], "_", 1:ncol(x)))}, envDataArray)
       envDataArray <- simplify2array(envDataArray)
     }
