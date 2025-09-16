@@ -37,10 +37,13 @@ envDataArray <- function(envData, occ = NULL){
       envDataArray <- Map(f = \(x){as.matrix(terra::as.data.frame(x))}, envData)
       envDataArray <- Map(f = \(x){stats::setNames(x, paste0(names(x)[[1]], "_", 1:ncol(x)))}, envDataArray)
       envDataArray <- simplify2array(envDataArray)
+
     }
 
 
   }
+
+
 
   return(envDataArray)
 }

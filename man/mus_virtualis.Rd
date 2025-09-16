@@ -10,30 +10,16 @@ A data frame with 20 rows and 4 variables:
   \item{\code{name}}{character COLUMN_DESCRIPTION}
   \item{\code{latitude}}{double COLUMN_DESCRIPTION}
   \item{\code{longitude}}{double COLUMN_DESCRIPTION}
-  \item{\code{presence}}{double COLUMN_DESCRIPTION} 
-}
-
-A data frame with 20 rows and 4 variables:
-\describe{
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{latitude}}{double COLUMN_DESCRIPTION}
-  \item{\code{longitude}}{double COLUMN_DESCRIPTION}
-  \item{\code{presence}}{double COLUMN_DESCRIPTION} 
+  \item{\code{presence}}{double COLUMN_DESCRIPTION}
 }
 }
 \usage{
 mus_virtualis
-
-mus_virtualis
 }
 \description{
 DATASET_DESCRIPTION
-
-DATASET_DESCRIPTION
 }
 \details{
-DETAILS
-
 DETAILS
 }
 \keyword{datasets}

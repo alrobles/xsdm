@@ -1,6 +1,6 @@
 #' Virtual species
 #'
-#' @param env_data A list with environmental time series raster object
+#' @param envData A list with environmental time series raster object
 #' @param param.list A list of parameters. Could be null for
 #' an unidimensional model (i. e. one environmental variable in the
 #' env list)
@@ -17,7 +17,7 @@
 #' pars <- list(mu = 4.38, sigl = 1.24, sigr = 1.05, c = -8.39, pd = 0.61)
 #' vsp( envData, param.list =  pars)
 #' }
-vsp <- function(env_data, param.list = NULL) {
+vsp <- function(envData, param.list = NULL) {
 
 
   if(!is.null(param.list)){
@@ -29,8 +29,8 @@ vsp <- function(env_data, param.list = NULL) {
       stop("Check the parameter names")
     }
   }
-  if(length(env_data) == 1){
-    envM <- as.matrix(env_data[[1]])
+  if(length(envData) == 1){
+    envM <- as.matrix(envData[[1]])
 
     f <- function(env)function(mu, sigl, sigr, c, pd){
       prob_detec(env, mu, sigl, sigr, c, pd)
@@ -43,7 +43,7 @@ vsp <- function(env_data, param.list = NULL) {
                         pd = 1)
     }
   } else {
-    envM <- envDataArray(env_data)
+    envM <- envDataArray(envData)
     f <- function(env)function(mu, sigl, sigr, c, pd, L){
       prob_detec(env, mu, sigl, sigr, c, pd, L)
     }
@@ -54,11 +54,12 @@ vsp <- function(env_data, param.list = NULL) {
 
   f_par <- f(envM)
 
-  coords <- terra::crds(env_data[[1]])
-  crs_val <- terra::crs(env_data[[1]])
+  coords <- terra::crds(envData[[1]])
+  crs_val <- terra::crs(envData[[1]])
   probs <- suppressWarnings(do.call(f_par, args = param.list))
   data.frame(coords, probs)|>
       terra::rast(crs = crs_val)
+
 
   #else (stop("Environmental data should be just for one variable"))
 }

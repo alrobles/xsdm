@@ -4,10 +4,10 @@
 \alias{vsp}
 \title{Virtual species}
 \usage{
-vsp(env_data, param.list = NULL)
+vsp(envData, param.list = NULL)
 }
 \arguments{
-\item{env_data}{A list with environmental time series raster object}
+\item{envData}{A list with environmental time series raster object}
 
 \item{param.list}{A list of parameters. Could be null for
 an unidimensional model (i. e. one environmental variable in the
